@@ -18,12 +18,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
 
-       
+
         static void Main(string[] args)
         {
 
 
-
+            DrawMap();
 
 
 
@@ -33,5 +33,32 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ReadKey();
         }
+
+        static void DrawMap()
+        {
+            try
+            {
+
+                string[] Maps = File.ReadAllLines(filepath);
+
+                foreach (string map in Maps)
+                {
+                    Console.WriteLine(map);
+                }
+            }
+
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine($"Error: The file '{filepath}' was not found.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+
+        }
+
+
     }
 }
+

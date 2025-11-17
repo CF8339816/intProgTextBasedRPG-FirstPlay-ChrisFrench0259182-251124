@@ -10,7 +10,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 {
     internal class Program
     {
-
+        static bool isPlaying = true;
 
         static Random healthPackSpawn = new Random();
         static Random EnemyStartSpawn = new Random();

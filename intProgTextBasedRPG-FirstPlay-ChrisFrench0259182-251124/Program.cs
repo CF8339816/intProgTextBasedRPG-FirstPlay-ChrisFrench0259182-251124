@@ -10,9 +10,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 {
     internal class Program
     {
-       
-           
-         
+
+
+        static Random healthPackSpawn = new Random();
+        static Random EnemyStartSpawn = new Random();
 
 
 
@@ -20,13 +21,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
 
-        static string filepath = "C:\\introGameUnityProjectsCFrench\\intProgTextBasedRPG-FirstPlay-ChrisFrench0259182-251124\\intProgTextBasedRPG-FirstPlay-ChrisFrench0259182-251124\\maps.txt";
+        static string filepath = "maps.txt";
 
       
 
         static void Main(string[] args)
         {
 
+            while (isPlaying)
 
             DrawMap();
             mapLegend();
@@ -42,6 +44,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m1
         static void DrawMap()
         {
+            Directory.GetCurrentDirectory();
             try
             {
 
@@ -50,8 +53,25 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 foreach (string map in Maps)
                 {
 
+                    //if (map = "g")
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    //}
+                    //if (map = "w")
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.Blue;
+                    //}
+                    //if (map = "m")
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.Gray;
+                    //}
+                    //if (map = "t")
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.Green;
+                    //}
 
-                    
+
+
                     switch (map)
                     {
 
@@ -70,15 +90,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
                     }
-                  
 
-
-
-
-                    Console.WriteLine(map);
-
-
+                    Console.WriteLine(map); 
                 }
+
+
+                
             }
 
             catch (FileNotFoundException)
@@ -104,22 +121,22 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("g");
+            Console.Write("g    ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Grass");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("w");
+            Console.Write("w    ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Water");
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("m");
+            Console.Write("m    ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Mountain");
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("t");
+            Console.Write("t    ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Trees");
 

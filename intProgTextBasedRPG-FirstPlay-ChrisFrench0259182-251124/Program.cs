@@ -14,20 +14,36 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static Random healthPackSpawn = new Random();
         static Random EnemyStartSpawn = new Random();
+
         static int p1_x_input;
         static int p1_y_input;
-        static int enemy_x_input;
-        static int enemy_y_input;
-
+        static int p1_x_pos = 1;
+        static int p1_y_pos = 1;
         static (int, int) p1_min_max_x = (1, 29);
         static (int, int) p1_min_max_y = (1, 32);
-        static (int, int) p2_min_max_x = (1, 29);
-        static (int, int) p2_min_max_y = (1, 32);
+        static ConsoleColor[] playerColors = { ConsoleColor.Cyan };
 
-
+        static int enemy_x_input;
+        static int enemy_y_input;
+        static int enemy_x_pos = 17;
+        static int enemy_y_pos = 20;
+        static (int, int) enemy_min_max_x = (1, 29);
+        static (int, int) enemy_min_max_y = (1, 32);
+        static ConsoleColor[] enemyColors = { ConsoleColor.Red };
 
         static string filepath = "maps.txt";
+
+
         static int p1_KillScore = 0;
+
+
+        static (int, int) healthPrize;
+
+        static int treasure_x_pos = 1;
+        static int treasure_y_pos = 1;
+        static (int, int) treasure_min_max_x = (1, 29);
+        static (int, int) treasure_min_max_y = (1, 32);
+        static ConsoleColor[] treasureColors = { ConsoleColor.Magenta };
 
 
         static bool healthTreasure = true;
@@ -37,14 +53,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int turn = -1;
 
         static char[] allKeybindings = (new char[] { 'W', 'A', 'S', 'D' });
-        static ConsoleColor[] playerColors = { ConsoleColor.Cyan};
-        static ConsoleColor[] enemyColors = { ConsoleColor.Red };
-        static ConsoleColor[] treasureColors = { ConsoleColor.Magenta };
+
+       
+
 
         static void Main(string[] args)
         {
 
-            
+
 
             DrawMap();
             mapLegend();
@@ -55,7 +71,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
 
-            Console.ReadKey();
+                Console.ReadKey();
         }
         //m1
         static void DrawMap()
@@ -72,40 +88,40 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                     foreach (char mapChar in map)
                     {
 
-                       switch (mapChar)
-                        
+                        switch (mapChar)
+
                         {
-                           
+
                             case 'g': // Grass
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 break;
-                            
+
                             case 'w': // Water
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 break;
-                            
+
                             case 'm': // Mountain
                                 Console.ForegroundColor = ConsoleColor.Gray;
                                 break;
-                           
+
                             case 't': // Trees
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 break;
 
 
                         }
-                        
+
                         Console.Write(mapChar);
                     }
-                    
+
                     Console.WriteLine();
                 }
 
-               
-                Console.ResetColor();
-            
 
-                
+                Console.ResetColor();
+
+
+
             }
 
             catch (FileNotFoundException)
@@ -117,12 +133,32 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
 
+            Console.SetCursorPosition(p1_x_pos, p1_y_pos);
+            Console.ForegroundColor = playerColors[0];
+            Console.Write("&");
 
+            Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+            Console.ForegroundColor = playerColors[1];
+            Console.Write("#");
 
+            if (healthTreasure)
+            {
 
+                healthTreasure = false;
+                treasure_x_pos = healthPackSpawn.Next(1, 6);
+                treasure_y_pos = healthPackSpawn.Next(1, 4);
+                healthPrize = (treasure_x_pos, treasure_y_pos);
             }
+
+
+
+
+
+        }
+
+
         //m2
-        
+
         static void mapLegend()
         {
 
@@ -160,7 +196,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             p1_x_input = 0;
             p1_y_input = 0;
             enemy_x_input = 0;
-           enemy_y_input = 0;
+            enemy_y_input = 0;
 
             char[] allowedKeysThisTurn; // different keys allowed on p1 vs. p2 turn
 
@@ -173,8 +209,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 allowedKeysThisTurn = (allKeybindings);
             }
-                // get the current player's input
-                ConsoleKey input = ConsoleKey.NoName;
+            // get the current player's input
+            ConsoleKey input = ConsoleKey.NoName;
             while (allowedKeysThisTurn.Contains(((char)input)))
             {
                 input = Console.ReadKey(true).Key;
@@ -186,10 +222,19 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (input == ConsoleKey.W) p1_y_input = -1;
             if (input == ConsoleKey.S) p1_y_input = 1;
 
-           
+
         }
+        //m4
+        static void GameUpdate()
+        {
+            // update players' positions based on input
+            p1_x_pos += p1_x_input;
+            p1_x_pos = p1_x_pos.Clamp(p1_min_max_x);
 
+            p1_y_pos += p1_y_input;
+            p1_y_pos = p1_y_pos.Clamp(p1_min_max_y);
 
+        }
     }
 }
 

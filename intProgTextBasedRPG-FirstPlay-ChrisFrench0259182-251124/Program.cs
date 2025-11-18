@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.IO.MemoryMappedFiles;
 
 namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 {
@@ -14,32 +15,19 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static Random healthPackSpawn = new Random();
         static Random EnemyStartSpawn = new Random();
-
+        static string character;
         static int p1_x_input;
         static int p1_y_input;
         static int p1_x_pos = 1;
         static int p1_y_pos = 1;
-        static (int, int) p1_min_max_x = (1, 29);
-        //static int LimitValueX(int value, int min, int max)
-        //{
-        //    // Ensures 'value' is at least 'min', then ensures the result is at most 'max'.
-        //    return Math.Max(1, Math.Min(1, 29));
-        //}
-        //static int p1_min_max_x = LimitValueX(1, 1, 29);
-        //static int LimitValueY(int value, int min, int max)
-        //{
-        //    // Ensures 'value' is at least 'min', then ensures the result is at most 'max'.
-        //    return Math.Max(1, Math.Min(1, 32));
-        //}
-        //static int p1_min_max_y = LimitValueX(1, 1, 32);
-
-        static (int, int) p1_min_max_y = (1, 32);
+        static (int, int) p1_min_max_x = (0, 55);
+        static (int, int) p1_min_max_y = (0, 32);
        
 
        
         static int enemy_x_pos = 17;
         static int enemy_y_pos = 20;
-        static (int, int) enemy_min_max_x = (1, 29);
+        static (int, int) enemy_min_max_x = (1, 55);
         static (int, int) enemy_min_max_y = (1, 32);
        
 
@@ -47,13 +35,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
         //static int p1_KillScore = 0;
-
+        static int health = 100;
+        static int score = 0;
+        static int dmg = 0;
+        static int hurt = 0;
 
         static (int, int) healthPrize;
 
         static int treasure_x_pos = 6;
         static int treasure_y_pos = 19;
-        static (int, int) treasure_min_max_x = (1, 29);
+        static (int, int) treasure_min_max_x = (1, 55);
         static (int, int) treasure_min_max_y = (1, 32);
         
         static ConsoleColor[] spriteColors = { ConsoleColor.Cyan, ConsoleColor.Red,ConsoleColor.Magenta };
@@ -65,31 +56,47 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
        // static int turn = -1;
 
         static char[] allKeybindings = (new char[] { 'W', 'A', 'S', 'D' });
+        
+        
+        static (int, int) player1_positionPROXY = (p1_x_pos, p1_y_pos);
 
-       
 
 
         static void Main(string[] args)
         {
-
+            alias();
+            Console.Clear();
             Console.CursorVisible = false;
 
             //DrawMap();
             ////mapLegend(); 
-          
-  
+            p1_x_pos = p1_min_max_x.Item1;
+            p1_y_pos = p1_min_max_y.Item1;
+
+         
+           
+           
+
+            mapLegend();
+            hud();
             while (isPlaying)
             {
              
-                //Console.Clear();
+                
+               // Console.Clear();
+
                 ProcessInput();
                 GameUpdate();
                 DrawMap();
-                     
+
+
+                DeBug();  
+
             }
 
+         
 
-     
+
         }
         //m1
         static void DrawMap()
@@ -113,21 +120,26 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
                             case 'g': // Grass
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
+
                                 break;
 
                             case 'w': // Water
                                 Console.ForegroundColor = ConsoleColor.Blue;
+
                                 break;
 
                             case 'm': // Mountain
                                 Console.ForegroundColor = ConsoleColor.Gray;
+
                                 break;
 
                             case 't': // Trees
                                 Console.ForegroundColor = ConsoleColor.Green;
+
                                 break;
                             case 'b': // Base
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
+
                                 break;
 
                         }
@@ -140,7 +152,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
                 Console.ResetColor();
-                mapLegend();
+           
 
 
             }
@@ -166,17 +178,20 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //{
 
             //    healthTreasure = false;
-            //    treasure_x_pos = healthPackSpawn.Next(1, 29);
-            //    treasure_y_pos = healthPackSpawn.Next(1, 32);
+            //    treasure_x_pos = healthPackSpawn.Next(p1_min_max_x.Item1, p1_min_max_x.Item2 + 1);
+            //    treasure_y_pos = healthPackSpawn.Next(p1_min_max_y.Item1, p1_min_max_y.Item2 + 1);
             //    healthPrize = (treasure_x_pos, treasure_y_pos);
+            //    Console.SetCursorPosition(treasure_x_pos, treasure_y_pos);
             //    Console.ForegroundColor = spriteColors[2];
             //    Console.Write("$");
             //}
 
+    
+          //  Console.SetCursorPosition(0, p1_min_max_y.Item2 + 10); 
+            Console.ResetColor();
+           
 
-
-
-
+            Console.ResetColor();
         }
 
 
@@ -225,23 +240,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             p1_y_input = 0;
 
 
-            char[] allowedKeysThisTurn; // different keys allowed on p1 vs. p2 turn
 
-            //// choose which keybindings to use
-            //if (turn % 2 == 0)
-            {
-            allowedKeysThisTurn = allKeybindings;
-            }
-            //else
-            //{
-            //    allowedKeysThisTurn = (allKeybindings);
-            //}
-            // get the current player's input
-            ConsoleKey input = ConsoleKey.NoName;
-            //while (allowedKeysThisTurn.Contains(((char)input)))
-            //{
-                input = Console.ReadKey(true).Key;
-            //}
+            ConsoleKey input = Console.ReadKey(true).Key;
+           
 
             // check all input keys
             if (input == ConsoleKey.A) p1_x_input = -1;
@@ -249,22 +250,75 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (input == ConsoleKey.W) p1_y_input = -1;
             if (input == ConsoleKey.S) p1_y_input = 1;
 
-
+            if (input == ConsoleKey.Q) isPlaying = false; //Quit the 'is playing' loop
         }
         //m4
         static void GameUpdate()
         {
-           
-            //return Math.Max(min, Math.Min(value, max));
-            // update players' positions based on input
-            p1_x_pos += p1_x_input;
-          //  p1_x_pos = p1_min_max_x;
 
+            p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
-          //  p1_x_pos = p1_min_max_y;
-            //p1_y_pos = p1_y_pos.Clamp(p1_min_max_y);
-            // p1_y_pos = Math.Clamp(p1_min_max_y);
+
+            p1_x_pos = Math.Max(p1_min_max_x.Item1, Math.Min(p1_x_pos, p1_min_max_x.Item2));
+
+            p1_y_pos = Math.Max(p1_min_max_y.Item1, Math.Min(p1_y_pos, p1_min_max_y.Item2));
+
+          
         }
+
+        //m5
+
+        static void alias()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.WriteLine("What is your character's name");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            character = Console.ReadLine();
+        }
+         
+        
+
+        static void hud()
+            {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write("Name:");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"{character}");
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}", "Score", "Life", "Attack", "Hurt");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("{0,2}{1,10}{2,10}{3,10}", score, health, dmg, hurt + "\n");
+            Console.ResetColor();
+
+
+
+        }
+
+
+
+        static void DeBug()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("debug block\n");
+                            
+
+            //checking the new proxy for position compliance C.F.
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Player 1 position:");
+            Console.ForegroundColor = spriteColors[0];
+            Console.WriteLine(player1_positionPROXY);
+
+
+        }
+
+
+
+
+
+
     }
+
 }
 

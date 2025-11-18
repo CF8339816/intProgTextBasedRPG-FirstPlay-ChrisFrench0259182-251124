@@ -18,10 +18,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static string character;
         static int p1_x_input;
         static int p1_y_input;
-        static int p1_x_pos = 1;
-        static int p1_y_pos = 1;
-        static (int, int) p1_min_max_x = (0, 55);
-        static (int, int) p1_min_max_y = (0, 32);
+        static int p1_x_pos;
+        static int p1_y_pos;
+        static (int, int) p1_min_max_x = (1, 55);
+        static (int, int) p1_min_max_y = (1, 32);
        
 
        
@@ -79,18 +79,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             mapLegend();
             hud();
+            DeBug();
+           
             while (isPlaying)
             {
-             
-                
-               // Console.Clear();
+             // Console.Clear();
 
                 ProcessInput();
                 GameUpdate();
                 DrawMap();
-
-
-                DeBug();  
+                  
 
             }
 
@@ -142,6 +140,21 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
                                 break;
 
+                            case '|': //Border
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                break;
+
+                            case '-': // Border
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                break;
+
+                            case '+': // Border
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+
+                                break;
+
                         }
 
                         Console.Write(mapChar);
@@ -170,6 +183,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ForegroundColor = spriteColors[0];
             Console.Write("&");
 
+            #region //enemy and health spawns 
+            
             //Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
             //Console.ForegroundColor = spriteColors[1];
             //Console.Write("#");
@@ -186,8 +201,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //    Console.Write("$");
             //}
 
-    
-          //  Console.SetCursorPosition(0, p1_min_max_y.Item2 + 10); 
+
+            //  Console.SetCursorPosition(0, p1_min_max_y.Item2 + 10); 
+
+            #endregion
+
             Console.ResetColor();
            
 
@@ -201,29 +219,29 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             //Console.Clear();
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("g    ");
+            Console.Write("g ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Grass");
+            Console.Write("= Grass    ");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("w    ");
+            Console.Write("w ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Water");
+            Console.Write("= Water    ");
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("m    ");
+            Console.Write("m ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Mountain");
+            Console.Write("= Mountain    ");
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("t    ");
+            Console.Write("t ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Trees");
+            Console.Write("= Trees    ");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write("b    ");
+            Console.Write("b ");
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("Base");
+            Console.WriteLine("= Base    ");
 
             Console.ResetColor();
         }
@@ -232,10 +250,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static void ProcessInput()
         {
-            // if this isn't here, input will block the game before drawing for the first time
-           //if (turn == -1) return;
-
-            // reset input
+           
+                     
             p1_x_input = 0;
             p1_y_input = 0;
 
@@ -304,7 +320,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.WriteLine("debug block\n");
                             
 
-            //checking the new proxy for position compliance C.F.
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Player 1 position:");
             Console.ForegroundColor = spriteColors[0];

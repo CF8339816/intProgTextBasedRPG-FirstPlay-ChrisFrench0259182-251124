@@ -22,9 +22,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int p1_y_pos;
         static (int, int) p1_min_max_x = (1, 55);
         static (int, int) p1_min_max_y = (1, 32);
-       
+        //static string[] Maps = File.ReadAllLines(filepath);
 
-       
+
         static int enemy_x_pos = 17;
         static int enemy_y_pos = 20;
         static (int, int) enemy_min_max_x = (1, 55);
@@ -80,15 +80,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             mapLegend();
             hud();
             DeBug();
-           
+            DrawMap();
             while (isPlaying)
             {
              // Console.Clear();
 
                 ProcessInput();
-                DrawMap();
+                
                 GameUpdate();
-              
+               
+                Draw();
                   
 
             }
@@ -100,12 +101,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m1
         static void DrawMap()
         {
-            
+           
             Directory.GetCurrentDirectory();
             try
             {
                 string[] Maps = File.ReadAllLines(filepath);
-                
+
 
                 foreach (string map in Maps)
                 {
@@ -157,9 +158,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                                 break;
 
                         }
-
+                        //Console.SetCursorPosition(0, 0);
                         Console.Write(mapChar);
-                        //Console.Write(map);
+                        
                     }
 
                     Console.WriteLine();
@@ -167,11 +168,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
 
                 Console.ResetColor();
-           
+
 
 
             }
-
             catch (FileNotFoundException)
             {
                 Console.WriteLine($"Error: The file '{filepath}' was not found.");
@@ -180,6 +180,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
+        }
+
+        static void Draw()
+        {
+
+            //Console.SetCursorPosition(0, 0);
+            //Console.Write(Maps);
 
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
             Console.ForegroundColor = spriteColors[0];
@@ -213,6 +220,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ResetColor();
         }
+        
 
 
         //m2

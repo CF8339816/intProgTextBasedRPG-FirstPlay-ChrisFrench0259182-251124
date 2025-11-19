@@ -254,14 +254,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
 
             //Console.Clear();
-            Console.SetCursorPosition(output_X, output_Y + 12);
+            Console.SetCursorPosition(output_X, output_Y + 11);
             string MapLegend =
             "+========= Map Legend ============+";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($" {MapLegend}\n");
 
 
-            Console.SetCursorPosition(output_X + 2, output_Y + 13);
+            Console.SetCursorPosition(output_X + 2, output_Y + 12);
             //Console.Clear();
 
             //Console.SetCursorPosition(output_X + 2, output_Y + 12);
@@ -344,35 +344,35 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void hud()
         {
-
+            EnemyHealth();
             //Console.Clear();
-            Console.SetCursorPosition(output_X, output_Y + 6);
+            Console.SetCursorPosition(output_X, output_Y + 5);
             string HUD =
             "+========= HUD ============+";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($" {HUD}\n");
 
                      
-            Console.SetCursorPosition(output_X + 2, output_Y + 7);
+            Console.SetCursorPosition(output_X + 2, output_Y + 6);
             
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("Name:");
-            Console.SetCursorPosition(output_X + 8, output_Y + 7);
+            Console.SetCursorPosition(output_X + 8, output_Y + 6);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{character}");
 
-            Console.SetCursorPosition(output_X + 2, output_Y + 8);
+            Console.SetCursorPosition(output_X + 2, output_Y + 7);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("{0,0}{1,9}{2,9}{3,9}{4,11}{5,9}", "XP", "Level", "Score", "Life", "Attack", "Hurt");
-            Console.SetCursorPosition(output_X + 2, output_Y + 9);
+            Console.SetCursorPosition(output_X + 2, output_Y + 8);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}", xp, level, score, health, dmg, hurt+ "\n");
             Console.ResetColor();
 
-            Console.SetCursorPosition(output_X + 2, output_Y + 10);
+            Console.SetCursorPosition(output_X + 2, output_Y + 9);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("Enemy Looks: ");
-            Console.SetCursorPosition(output_X + 9, output_Y + 10);
+            Console.SetCursorPosition(output_X + 16, output_Y + 9);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{ehStat}");
 

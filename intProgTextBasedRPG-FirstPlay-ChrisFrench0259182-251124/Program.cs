@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
@@ -127,14 +128,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //p1_y_pos = p1_min_max_y.Item1;
 
 
+              DrawMap();
+            //mapLegend();
+            //hud();
 
-
-
-            mapLegend();
-            hud();
-           
-           // DeBug();
-            DrawMap();
             while (isPlaying)
             {
                 // Console.Clear();
@@ -148,9 +145,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 DrawP();
                 DrawE();
                 DrawH();
-
+                mapLegend();
+                hud();
                 DeBug();
             }
+
+            
+           
+           // DeBug();
+          
             //while (inCombat)
             //{
 
@@ -249,31 +252,43 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static void mapLegend()
         {
+
             //Console.Clear();
+            Console.SetCursorPosition(output_X, output_Y + 10);
+            string MapLegend =
+            "+========= Map Legend ============+";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("g ");
+            Console.WriteLine($" {MapLegend}\n");
+
+
+            Console.SetCursorPosition(output_X + 2, output_Y + 12);
+            //Console.Clear();
+
+            //Console.SetCursorPosition(output_X + 2, output_Y + 12);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("= Grass    ");
+            Console.Write("g = Grass  ");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.Write("= Grass    ");
 
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("w ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("= Water    ");
+            Console.Write("w = Water  ");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.Write("= Water    ");
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("m ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("= Mountain    ");
+            Console.Write("m = Mountain  ");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.Write("= Mountain    ");
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("t ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("= Trees    ");
+            Console.Write("t = Trees  ");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.Write("= Trees    ");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write("b ");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("= Base    ");
+            Console.Write("b = Base  ");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("= Base    ");
 
             Console.ResetColor();
         }
@@ -303,7 +318,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m4
         static void GameUpdate()
         {
-
+           
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
 
@@ -330,17 +345,28 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static void hud()
         {
 
-            EnemyHealth();
+            //Console.Clear();
+            Console.SetCursorPosition(output_X, output_Y + 6);
+            string HUD =
+            "+========= HUD ============+";
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine($" {HUD}\n");
 
+                     
+            Console.SetCursorPosition(output_X + 2, output_Y + 7);
+            
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("Name:");
+            Console.SetCursorPosition(output_X + 8, output_Y + 7);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{character}");
-          
+
+            Console.SetCursorPosition(output_X + 2, output_Y + 8);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,0}{1,9}{2,9}{3,9}{4,11}{5,9}{6,22}", "XP", "Level", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
+            Console.WriteLine("{0,0}{1,9}{2,9}{3,9}{4,11}{5,9}{6,16}", "XP", "Level", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
+            Console.SetCursorPosition(output_X + 2, output_Y + 9);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}{6,25}", xp, level, score, health, dmg, hurt, ehStat + "\n");
+            Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}{6,21}", xp, level, score, health, dmg, hurt, ehStat + "\n");
             Console.ResetColor();
 
 
@@ -354,9 +380,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             //Console.Clear();
             Console.SetCursorPosition(output_X, output_Y);
+            string DebugBox=
 
+"+========= debug block ============+";
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("debug block\n");
+            Console.WriteLine($" {DebugBox}\n");
 
 
             //    Console.ForegroundColor = ConsoleColor.White;
@@ -364,24 +392,24 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //    Console.ForegroundColor = spriteColors[0];
             //    Console.WriteLine(player1_positionPROXY);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(output_X, output_Y +1);
+            Console.SetCursorPosition(output_X +2 , output_Y +1);
             Console.Write("Player 1 Pickup:");
             
-            Console.SetCursorPosition(output_X, output_Y+2);
+            Console.SetCursorPosition(output_X + 22, output_Y+1);
             Console.WriteLine(HealthUp);
 
-            Console.SetCursorPosition(output_X, output_Y +3);
+            Console.SetCursorPosition(output_X +2, output_Y +2);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Player 1 position:");
            
-            Console.SetCursorPosition(output_X, output_Y +4 );
+            Console.SetCursorPosition(output_X + 22, output_Y +2 );
             Console.WriteLine(player1_positionPROXY);
 
-            Console.SetCursorPosition(output_X, output_Y + 5);
+            Console.SetCursorPosition(output_X +2, output_Y + 3);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Enemy position:");
 
-            Console.SetCursorPosition(output_X, output_Y + 6);
+            Console.SetCursorPosition(output_X + 22, output_Y + 3);
             Console.WriteLine(enemyLoc);
         }
 
@@ -389,10 +417,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //static void Draw(player)
         static void DrawP()
         {
-            Console.Clear();
+            //Console.Clear();
             //DrawMap();
-            Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
-            Console.Write(mapChar);
+            //Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
+            //Console.Write(mapChar);
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
             Console.ForegroundColor = spriteColors[0];
             Console.Write("&");

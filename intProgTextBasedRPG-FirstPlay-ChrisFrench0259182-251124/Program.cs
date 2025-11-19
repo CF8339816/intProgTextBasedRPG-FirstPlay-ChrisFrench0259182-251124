@@ -15,11 +15,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static bool healthTreasure = true;
         static bool EnemySpawn = true;
 
-        static Random randomShield = new Random();
-        static Random randomHealth = new Random();
+        //static Random randomShield = new Random();
+        //static Random randomHealth = new Random();
         static Random randomDMG = new Random();
-        static Random randomEnDMG = new Random();
-        static Random randomXP = new Random();
+        //static Random randomEnDMG = new Random();
+        //static Random randomXP = new Random();
         static Random healthPackSpawn = new Random();
         static Random EnemyStartSpawn = new Random();
 
@@ -70,29 +70,29 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static (int, int) player1_positionPROXY = (p1_x_pos, p1_y_pos);
 
         static int health = 100;
-        static int minhealth = 0;
-        static int maxhealth = 100;
+        //static int minhealth = 0;
+        //static int maxhealth = 100;
 
-        static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
-        //static string healthStatus;
-        static int shield = 100;
-        static int minshield = 0;
-        static int maxshield = 100;
+        //static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
+        ////static string healthStatus;
+        //static int shield = 100;
+        //static int minshield = 0;
+        //static int maxshield = 100;
 
-        static int clampedshield = shield < minshield ? minshield : (shield > maxshield ? maxshield : shield);
-        static int lives = 3;
-        static int minlives = 0;
-        static int maxlives = 99;
+        //static int clampedshield = shield < minshield ? minshield : (shield > maxshield ? maxshield : shield);
+        //static int lives = 3;
+        //static int minlives = 0;
+        //static int maxlives = 99;
 
-        static int clampedlives = lives < minlives ? minlives : (lives > maxlives ? maxlives : lives);
-        static string Character;
+        //static int clampedlives = lives < minlives ? minlives : (lives > maxlives ? maxlives : lives);
+        //static string Character;
         static int xp = 0;
         static int level = 0;
 
-        static int enemydmg;
-        static int giveXP;
-        static int regenShield;
-        static int regenHealth;
+      
+        //static int giveXP;
+        //static int regenShield;
+        //static int regenHealth;
         //static class RangedInt;
 
 
@@ -318,14 +318,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.Write("Name:");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{character}");
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine("{0,0}{1,12}}", "XP", "Level");
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            //Console.WriteLine("{0,2}{1,10}", xp, level);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,0}{1,22}{2,12}}", "Name", "XP", "Level");
+            Console.WriteLine("{0,0}{1,9}{2,9}{3,9}{4,11}{5,9}{6,22}", "XP", "Level", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0,0}{1,20}{2,10}", character, xp, level);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}{4,15}", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0,2}{1,10}{2,10}{3,10}{3,10}", score, health, dmg, hurt, ehStat + "\n");
+            Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}{6,25}", xp, level, score, health, dmg, hurt, ehStat + "\n");
             Console.ResetColor();
 
 
@@ -414,10 +414,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         }
         //m11
 
-        static void healthpack()
-        {
+        //static void healthpack()
+        //{
 
-        }
+        //}
         //m12
         static void EnemyHealth()
         {

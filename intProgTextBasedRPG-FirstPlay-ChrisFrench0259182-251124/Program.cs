@@ -32,7 +32,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
        
 
         static string filepath = "maps.txt";
-
+        //static char filepath = "maps.txt";
 
         //static int p1_KillScore = 0;
         static int health = 100;
@@ -86,8 +86,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
              // Console.Clear();
 
                 ProcessInput();
-                GameUpdate();
                 DrawMap();
+                GameUpdate();
+              
                   
 
             }
@@ -103,8 +104,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Directory.GetCurrentDirectory();
             try
             {
-
                 string[] Maps = File.ReadAllLines(filepath);
+                
 
                 foreach (string map in Maps)
                 {
@@ -158,6 +159,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                         }
 
                         Console.Write(mapChar);
+                        //Console.Write(map);
                     }
 
                     Console.WriteLine();

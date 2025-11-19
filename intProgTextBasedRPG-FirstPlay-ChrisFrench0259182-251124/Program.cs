@@ -35,6 +35,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int p1_Old_Y = p1_y_pos;
         //static string[] Maps = File.ReadAllLines(filepath);
 
+      
+        static int output_X= 61;
+        static int output_Y= 1;
+        static (int, int) output_min_max_x = (60, 85);
+        static (int, int) output_min_max_y = (0, 27);
+      
+
+
+
+
 
         static int enemy_x_pos;
         static int enemy_y_pos;
@@ -122,7 +132,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             mapLegend();
             hud();
-            DeBug();
+           
+           // DeBug();
             DrawMap();
             while (isPlaying)
             {
@@ -137,6 +148,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 DrawP();
                 DrawE();
                 DrawH();
+
+                DeBug();
             }
             //while (inCombat)
             //{
@@ -338,8 +351,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static void DeBug()
         {
-            //    Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //    Console.WriteLine("debug block\n");
+
+            //Console.Clear();
+            Console.SetCursorPosition(output_X, output_Y);
+
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("debug block\n");
 
 
             //    Console.ForegroundColor = ConsoleColor.White;
@@ -347,24 +364,33 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //    Console.ForegroundColor = spriteColors[0];
             //    Console.WriteLine(player1_positionPROXY);
             Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition(output_X, output_Y +1);
             Console.Write("Player 1 Pickup:");
-            Console.ForegroundColor = spriteColors[3];
+            
+            Console.SetCursorPosition(output_X, output_Y+2);
             Console.WriteLine(HealthUp);
 
-
-            //Found out after adding player position for debugging that the positions display   y, x for  pickup and  x,y for player so not getting the correct location C.F. 
+            Console.SetCursorPosition(output_X, output_Y +3);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Player 1 position:");
-            Console.ForegroundColor = spriteColors[0];
+           
+            Console.SetCursorPosition(output_X, output_Y +4 );
             Console.WriteLine(player1_positionPROXY);
 
+            Console.SetCursorPosition(output_X, output_Y + 5);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Enemy position:");
+
+            Console.SetCursorPosition(output_X, output_Y + 6);
+            Console.WriteLine(enemyLoc);
         }
 
         //m8
         //static void Draw(player)
         static void DrawP()
         {
-
+            Console.Clear();
+            //DrawMap();
             Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
             Console.Write(mapChar);
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
@@ -470,9 +496,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         ////m13
         //static void Heal(int hp)
         //{
-        //    // health = Math.Clamp(health, minhealth, maxhealth);
-
-        //    // Random randomHealth = new Random();
+      
         //    int regenHealth = randomHealth.Next(15, 40);
 
         //    hp = regenHealth; //randomizes exp
@@ -486,9 +510,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         ////m14
         //static void RegenerateShield(int hp)
         //{
-        //    // shield = Math.Clamp(shield, minshield, maxshield);
-
-        //    //Random randomShield = new Random();
+       
         //    int regenShield = randomShield.Next(15, 40);
 
         //    hp = regenShield; //randomizes exp
@@ -548,14 +570,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //        {
         //            if (health >= 0)
         //            {
-        //                /* code was meant to isolate and negate spillover damage to remove  neg health  could not get this to work
-        //                 * 
-        //                 * //int damageToHP = Math.Min(shield, remainingDamage2);
-        //                 *  //health -= damageToHP;
-        //                 * //remainingDamage2 -= damageToHP;
-        //                 *  
-        //                 */
-
+        //               
         //                health -= remainingDamage;
         //            }
 

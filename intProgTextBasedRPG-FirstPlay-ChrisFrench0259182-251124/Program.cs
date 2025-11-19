@@ -124,6 +124,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static void Main(string[] args)
         {
+            Console.SetCursorPosition(0, 0);
             alias();
             Console.Clear();
             Console.CursorVisible = false;
@@ -142,7 +143,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 // Console.Clear();
 
-
+              
 
                 ProcessInput();
 
@@ -171,7 +172,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m1
         static void DrawMap()
         {
-
+         
             Directory.GetCurrentDirectory();
             try
             {
@@ -306,6 +307,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
 
 
+            
+            
+            
+            
             p1_x_input = 0;
             p1_y_input = 0;
 
@@ -431,9 +436,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static void DrawP()
         {
             //Console.Clear();
-            //DrawMap();
-            //Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
-            //Console.Write(mapChar);
+            // Console.SetCursorPosition(0, 0);
+            // DrawMap();
+            // Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
+            //  Console.Write(mapChar);
+            for(mapChar == player1_positionPROXY)
+            {
+                Console.Write(mapChar);
+            }
+
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
             Console.ForegroundColor = spriteColors[0];
             Console.Write("&");
@@ -599,45 +610,45 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //}
 
         ////m16
-        static void TakeDamage(int damage)
-        {
+        //static void TakeDamage(int damage)
+        //{
 
-            Console.SetCursorPosition(output_X, output_Y + 17);
-                    string Kapow =
-        "+========= Damage output ============+";
-        Console.WriteLine($" {Kapow}\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.SetCursorPosition(output_X + 2, output_Y + 18);
-                    Console.Write("Player Takes ");
+        //    Console.SetCursorPosition(output_X, output_Y + 17);
+        //            string Kapow =
+        //"+========= Damage output ============+";
+        //Console.WriteLine($" {Kapow}\n");
+        //            Console.ForegroundColor = ConsoleColor.White;
+        //            Console.SetCursorPosition(output_X + 2, output_Y + 18);
+        //            Console.Write("Player Takes ");
 
-                    Console.SetCursorPosition(output_X + 22, output_Y + 18);
-                    Console.WriteLine(hp);
+        //            Console.SetCursorPosition(output_X + 22, output_Y + 18);
+        //            Console.WriteLine(hp);
 
-        Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(output_X + 2, output_Y + 19);
-            Console.Write("Healed for: ");
+        //Console.ForegroundColor = ConsoleColor.White;
+        //    Console.SetCursorPosition(output_X + 2, output_Y + 19);
+        //    Console.Write("Healed for: ");
 
-            Console.SetCursorPosition(output_X + 22, output_Y + 19);
-            Console.WriteLine(hp);
+        //    Console.SetCursorPosition(output_X + 22, output_Y + 19);
+        //    Console.WriteLine(hp);
         
-          Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(output_X + 2, output_Y + 20);
-            Console.Write("Healed for: ");
+        //  Console.ForegroundColor = ConsoleColor.White;
+        //    Console.SetCursorPosition(output_X + 2, output_Y + 20);
+        //    Console.Write("Healed for: ");
 
-            Console.SetCursorPosition(output_X + 22, output_Y + 20);
-            Console.WriteLine(hp);
-        
-        
+        //    Console.SetCursorPosition(output_X + 22, output_Y + 20);
+        //    Console.WriteLine(hp);
         
         
-        Random randomDMG = new Random();
-        int enemydmg = randomDMG.Next(12, 35);
-        Console.WriteLine();
-            Console.Write($"You take ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(enemydmg);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(" damage...");
+        
+        
+        //Random randomDMG = new Random();
+        //int enemydmg = randomDMG.Next(12, 35);
+        //Console.WriteLine();
+        //    Console.Write($"You take ");
+        //    Console.ForegroundColor = ConsoleColor.Blue;
+        //    Console.Write(enemydmg);
+        //    Console.ForegroundColor = ConsoleColor.DarkYellow;
+        //    Console.WriteLine(" damage...");
 
             //    int remainingDamage = enemydmg; //sets up remaining spillover damage
             //                                    // int remainingDamage2 = remainingDamage;   // sets up remaining slillover hp damage foer disreggard
@@ -680,7 +691,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             //            }
             //        }
-        }
+        //}
 
         ////m17
 

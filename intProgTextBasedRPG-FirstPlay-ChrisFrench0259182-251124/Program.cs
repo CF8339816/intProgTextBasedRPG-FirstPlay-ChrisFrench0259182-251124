@@ -21,7 +21,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int p1_x_pos;
         static int p1_y_pos;
         static (int, int) p1_min_max_x = (1, 55);
-        static (int, int) p1_min_max_y = (1, 32);
+        static (int, int) p1_min_max_y = (0, 27);
+        static int p1_Old_X = p1_x_pos;
+        static int p1_Old_Y = p1_y_pos;
         //static string[] Maps = File.ReadAllLines(filepath);
 
 
@@ -29,8 +31,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int enemy_y_pos = 20;
         static (int, int) enemy_min_max_x = (1, 55);
         static (int, int) enemy_min_max_y = (1, 32);
-       
 
+        static char mapChar;
         static string filepath = "maps.txt";
         //static char filepath = "maps.txt";
 
@@ -48,7 +50,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static (int, int) treasure_min_max_y = (1, 32);
         
         static ConsoleColor[] spriteColors = { ConsoleColor.Cyan, ConsoleColor.Red,ConsoleColor.Magenta };
-
+        
         static bool healthTreasure = true;
         static bool EnemySpawn = true;
 
@@ -70,8 +72,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             //DrawMap();
             ////mapLegend(); 
-            p1_x_pos = p1_min_max_x.Item1;
-            p1_y_pos = p1_min_max_y.Item1;
+            //p1_x_pos = p1_min_max_x.Item1;
+            //p1_y_pos = p1_min_max_y.Item1;
 
          
            
@@ -79,12 +81,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             mapLegend();
             hud();
-            DeBug();
-            DrawMap();
+            //DeBug();
+             DrawMap();
             while (isPlaying)
             {
              // Console.Clear();
 
+               
+                
                 ProcessInput();
                 
                 GameUpdate();
@@ -191,7 +195,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
             Console.ForegroundColor = spriteColors[0];
             Console.Write("&");
-
+            Console.SetCursorPosition(p1_Old_X, p1_Old_Y) ;
+            Console.Write(mapChar);
             #region //enemy and health spawns 
             
             //Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);

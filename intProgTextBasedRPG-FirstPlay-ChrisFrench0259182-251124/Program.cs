@@ -97,9 +97,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 
                 GameUpdate();
                
-                Draw();
-                  
-
+                DrawP();
+                DrawE();
+                DrawH();
             }
 
          
@@ -190,75 +190,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
         }
 
-        static void Draw()
-        {
-
-            //Console.SetCursorPosition(0, 0);
-            //Console.Write(Maps);
-
-            Console.SetCursorPosition(p1_x_pos, p1_y_pos);
-            Console.ForegroundColor = spriteColors[0];
-            Console.Write("&");
-            Console.SetCursorPosition(p1_Old_X, p1_Old_Y) ;
-            Console.Write(mapChar);
-            #region //enemy and health spawns 
-
-          
-            if (EnemySpawn)
-            {
-
-                EnemySpawn = false;
-                enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2 + 1);
-                enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2 + 1);
-                healthPrize = (enemy_x_pos, enemy_y_pos);
-                Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
-                Console.ForegroundColor = spriteColors[1];
-                Console.Write("#");
-            }
-            
-
-            if (healthTreasure)
-            {
-
-                healthTreasure = false;
-                treasure_x_pos = healthPackSpawn.Next(treasure_min_max_x.Item1, treasure_min_max_x.Item2 + 1);
-                treasure_y_pos = healthPackSpawn.Next(treasure_min_max_y.Item1, treasure_min_max_y.Item2 + 1);
-                healthPrize = (treasure_x_pos, treasure_y_pos);
-                Console.SetCursorPosition(treasure_x_pos, treasure_y_pos);
-                Console.ForegroundColor = spriteColors[2];
-                Console.Write("$");
-            }
-
-
-
-
-            
-
-
-
-            //if (healthTreasure)
-            //{
-
-            //    healthTreasure = false;
-            //    treasure_x_pos = healthPackSpawn.Next(p1_min_max_x.Item1, p1_min_max_x.Item2 + 1);
-            //    treasure_y_pos = healthPackSpawn.Next(p1_min_max_y.Item1, p1_min_max_y.Item2 + 1);
-            //    healthPrize = (treasure_x_pos, treasure_y_pos);
-            //    Console.SetCursorPosition(treasure_x_pos, treasure_y_pos);
-            //    Console.ForegroundColor = spriteColors[2];
-            //    Console.Write("$");
-            //}
-
-
-            //  Console.SetCursorPosition(0, p1_min_max_y.Item2 + 10); 
-
-            #endregion
-
-            Console.ResetColor();
-           
-
-            Console.ResetColor();
-        }
-        
+    
 
 
         //m2
@@ -342,7 +274,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         }
          
         
-
+        //m6
         static void hud()
             {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -360,7 +292,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         }
 
-
+        //m7
 
         static void DeBug()
         {
@@ -376,7 +308,70 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         }
 
+        //m8
+        //static void Draw(player)
+        static void DrawP()
+        {
 
+            Console.SetCursorPosition(p1_x_pos, p1_y_pos);
+            Console.ForegroundColor = spriteColors[0];
+            Console.Write("&");
+            Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
+            Console.Write(mapChar);
+         
+            Console.ResetColor();
+
+
+            Console.ResetColor();
+        }
+
+        //m9
+
+        //static void DrawE(enemy)
+        static void DrawE()
+        {
+
+            if (EnemySpawn)
+            {
+
+                EnemySpawn = false;
+                enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2 + 1);
+                enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2 + 1);
+                healthPrize = (enemy_x_pos, enemy_y_pos);
+                Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                Console.ForegroundColor = spriteColors[1];
+                Console.Write("#");
+            }
+
+            Console.ResetColor();
+
+
+            Console.ResetColor();
+        }
+
+
+        //m10
+        //static void Draw(health)
+        static void DrawH()
+        {
+             
+            if (healthTreasure)
+            {
+
+                healthTreasure = false;
+                treasure_x_pos = healthPackSpawn.Next(treasure_min_max_x.Item1, treasure_min_max_x.Item2 + 1);
+                treasure_y_pos = healthPackSpawn.Next(treasure_min_max_y.Item1, treasure_min_max_y.Item2 + 1);
+                healthPrize = (treasure_x_pos, treasure_y_pos);
+                Console.SetCursorPosition(treasure_x_pos, treasure_y_pos);
+                Console.ForegroundColor = spriteColors[2];
+                Console.Write("$");
+            }
+
+            Console.ResetColor();
+
+
+            Console.ResetColor();
+        }
 
 
 

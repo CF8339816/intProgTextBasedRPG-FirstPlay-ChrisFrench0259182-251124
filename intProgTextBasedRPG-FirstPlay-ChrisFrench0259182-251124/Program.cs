@@ -12,9 +12,17 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
     internal class Program
     {
         static bool isPlaying = true;
+        static bool healthTreasure = true;
+        static bool EnemySpawn = true;
 
+        static Random randomShield = new Random();
+        static Random randomHealth = new Random();
+        static Random randomDMG = new Random();
+        static Random randomEnDMG = new Random();
+        static Random randomXP = new Random();
         static Random healthPackSpawn = new Random();
         static Random EnemyStartSpawn = new Random();
+
         static string character;
         static int p1_x_input;
         static int p1_y_input;
@@ -29,11 +37,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static int enemy_x_pos;
         static int enemy_y_pos;
-        static (int, int) enemy_min_max_x = (15,35);
+        static (int, int) enemy_min_max_x = (15, 35);
         static (int, int) enemy_min_max_y = (12, 27);
         static string ehStat;
-        static int enemyHealth;
-        static int enemyDmg;
+        static int eHealth = 100;
+        static int enemydmg = randomDMG.Next(12, 35);
 
 
         static char mapChar;
@@ -41,7 +49,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //static char filepath = "maps.txt";
 
         //static int p1_KillScore = 0;
-        static int health = 100;
+        //static int health = 100;
         static int score = 0;
         static int dmg = 0;
         static int hurt = 0;
@@ -53,18 +61,44 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static (int, int) treasure_min_max_x = (9, 45);
         static (int, int) treasure_min_max_y = (7, 20);
         static int HealthUp;
-        static ConsoleColor[] spriteColors = { ConsoleColor.Cyan, ConsoleColor.Red,ConsoleColor.Magenta };
-        
-        static bool healthTreasure = true;
-        static bool EnemySpawn = true;
 
 
-       // static int turn = -1;
-
+        static ConsoleColor[] spriteColors = { ConsoleColor.Cyan, ConsoleColor.Red, ConsoleColor.Magenta };
         static char[] allKeybindings = (new char[] { 'W', 'A', 'S', 'D' });
-        
-        
+
+
         static (int, int) player1_positionPROXY = (p1_x_pos, p1_y_pos);
+
+        static int health = 100;
+        static int minhealth = 0;
+        static int maxhealth = 100;
+
+        static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
+        //static string healthStatus;
+        static int shield = 100;
+        static int minshield = 0;
+        static int maxshield = 100;
+
+        static int clampedshield = shield < minshield ? minshield : (shield > maxshield ? maxshield : shield);
+        static int lives = 3;
+        static int minlives = 0;
+        static int maxlives = 99;
+
+        static int clampedlives = lives < minlives ? minlives : (lives > maxlives ? maxlives : lives);
+        static string Character;
+        static int xp = 0;
+        static int level = 0;
+
+        static int enemydmg;
+        static int giveXP;
+        static int regenShield;
+        static int regenHealth;
+        //static class RangedInt;
+
+
+
+
+
 
 
 
@@ -79,37 +113,37 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //p1_x_pos = p1_min_max_x.Item1;
             //p1_y_pos = p1_min_max_y.Item1;
 
-         
-           
-           
+
+
+
 
             mapLegend();
             hud();
             //DeBug();
-             DrawMap();
+            DrawMap();
             while (isPlaying)
             {
-             // Console.Clear();
+                // Console.Clear();
 
-               
-                
+
+
                 ProcessInput();
-                
+
                 GameUpdate();
-               
+
                 DrawP();
                 DrawE();
                 DrawH();
             }
 
-         
+
 
 
         }
         //m1
         static void DrawMap()
         {
-           
+
             Directory.GetCurrentDirectory();
             try
             {
@@ -168,7 +202,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                         }
                         //Console.SetCursorPosition(0, 0);
                         Console.Write(mapChar);
-                        
+
                     }
 
                     Console.WriteLine();
@@ -190,7 +224,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
         }
 
-    
+
 
 
         //m2
@@ -230,15 +264,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static void ProcessInput()
         {
-           
-                     
+
+
             p1_x_input = 0;
             p1_y_input = 0;
 
 
 
             ConsoleKey input = Console.ReadKey(true).Key;
-           
+
 
             // check all input keys
             if (input == ConsoleKey.A) p1_x_input = -1;
@@ -259,7 +293,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             p1_y_pos = Math.Max(p1_min_max_y.Item1, Math.Min(p1_y_pos, p1_min_max_y.Item2));
 
-          
+
         }
 
         //m5
@@ -272,18 +306,24 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ForegroundColor = ConsoleColor.Blue;
             character = Console.ReadLine();
         }
-         
-        
+
+
         //m6
         static void hud()
-            {
+        {
+
+            EnemyHealth();
+
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.Write("Name:");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{character}");
-
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}{4,9}", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
+            Console.WriteLine("{0,0}{1,22}{2,12}}", "Name", "XP", "Level");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("{0,0}{1,20}{2,10}", character, xp, level);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}{4,15}", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("{0,2}{1,10}{2,10}{3,10}{3,10}", score, health, dmg, hurt, ehStat + "\n");
             Console.ResetColor();
@@ -294,31 +334,31 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         //m7
 
-        static void DeBug()
-        {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("debug block\n");
-                            
-
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("Player 1 position:");
-            Console.ForegroundColor = spriteColors[0];
-            Console.WriteLine(player1_positionPROXY);
+        //static void DeBug()
+        //{
+        //    Console.ForegroundColor = ConsoleColor.DarkYellow;
+        //    Console.WriteLine("debug block\n");
 
 
-        }
+        //    Console.ForegroundColor = ConsoleColor.White;
+        //    Console.Write("Player 1 position:");
+        //    Console.ForegroundColor = spriteColors[0];
+        //    Console.WriteLine(player1_positionPROXY);
+
+
+        //}
 
         //m8
         //static void Draw(player)
         static void DrawP()
         {
 
+            Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
+            Console.Write(mapChar);
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
             Console.ForegroundColor = spriteColors[0];
             Console.Write("&");
-            Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
-            Console.Write(mapChar);
-         
+
             Console.ResetColor();
 
 
@@ -354,7 +394,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //static void Draw(health)
         static void DrawH()
         {
-             
+
             if (healthTreasure)
             {
 
@@ -372,7 +412,175 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ResetColor();
         }
+        //m11
 
+        static void healthpack()
+        {
+
+        }
+        //m12
+        static void EnemyHealth()
+        {
+            if (eHealth == 100)
+            {
+                ehStat = "Looks Healthy";
+            }
+            else if (eHealth <= 75)
+            {
+                ehStat = "looks Hurt";
+            }
+            else if (eHealth <= 50)
+            {
+                ehStat = "looks Bloodied ";
+            }
+            else if (eHealth <= 25)
+            {
+                ehStat = "Looks Injured ";
+            }
+
+            else if (eHealth <= 10)
+            {
+                ehStat = "Looks Mortally wounded ";
+            }
+            else if (eHealth <= 0)
+            {
+                ehStat = " Um...Sleeping... ";
+            }
+        }
+
+
+        ////m13
+        //static void Heal(int hp)
+        //{
+        //    // health = Math.Clamp(health, minhealth, maxhealth);
+
+        //    // Random randomHealth = new Random();
+        //    int regenHealth = randomHealth.Next(15, 40);
+
+        //    hp = regenHealth; //randomizes exp
+        //    health += hp;
+
+        //    if (health < 100)
+        //    {
+        //        health = health + hp;
+        //    }
+        //}
+        ////m14
+        //static void RegenerateShield(int hp)
+        //{
+        //    // shield = Math.Clamp(shield, minshield, maxshield);
+
+        //    //Random randomShield = new Random();
+        //    int regenShield = randomShield.Next(15, 40);
+
+        //    hp = regenShield; //randomizes exp
+        //    shield += hp;
+
+        //    if (shield < 100)
+        //    {
+        //        shield = shield + hp;
+        //    }
+
+        //}
+
+        ////m15
+        //static void Revive()
+        //{
+
+        //    if (lives > 0)
+        //    {
+        //        Console.ForegroundColor = ConsoleColor.Magenta;
+        //        Console.WriteLine($"You have died, applying resurection.");
+        //        Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+
+        //        shield = 100;
+        //        health = 100;
+        //        lives--;
+        //    }
+
+
+        //}
+
+        ////m16
+        //static void TakeDamage(int damage)
+        //{
+        //    //Random randomDMG = new Random();
+        //    int enemydmg = randomDMG.Next(12, 35);
+        //    Console.WriteLine();
+        //    Console.Write($"You take ");
+        //    Console.ForegroundColor = ConsoleColor.Blue;
+        //    Console.Write(enemydmg);
+        //    Console.ForegroundColor = ConsoleColor.DarkYellow;
+        //    Console.WriteLine(" damage...");
+
+        //    int remainingDamage = enemydmg; //sets up remaining spillover damage
+        //                                    // int remainingDamage2 = remainingDamage;   // sets up remaining slillover hp damage foer disreggard
+        //                                    // Damage the shield first
+        //    if (shield > 0)
+        //    {
+        //        int damageToShield = Math.Min(shield, remainingDamage);
+        //        shield -= damageToShield;
+        //        remainingDamage -= damageToShield;
+        //    }
+
+        //    if (remainingDamage > 0)
+
+        //        if (remainingDamage > 0)
+        //        {
+        //            if (health >= 0)
+        //            {
+        //                /* code was meant to isolate and negate spillover damage to remove  neg health  could not get this to work
+        //                 * 
+        //                 * //int damageToHP = Math.Min(shield, remainingDamage2);
+        //                 *  //health -= damageToHP;
+        //                 * //remainingDamage2 -= damageToHP;
+        //                 *  
+        //                 */
+
+        //                health -= remainingDamage;
+        //            }
+
+        //            else if (health <= 0 && lives > 0)
+        //            {
+
+        //                lives--;
+
+        //                // Console.ForegroundColor = ConsoleColor.Magenta;
+        //                // Console.WriteLine($"You have died, applying resurection.");
+        //                // Console.ForegroundColor = ConsoleColor.DarkYellow;
+        //                Revive();
+        //            }
+
+        //            else
+        //            {
+        //                Console.ForegroundColor = ConsoleColor.Magenta;
+        //                Console.WriteLine($"You have died, Game over. \n\n Your ending stats:.....\n");
+        //                Console.ForegroundColor = ConsoleColor.DarkYellow;
+        //                Console.ReadKey();
+        //                Console.Clear();
+
+        //            }
+        //        }
+        //}
+
+        ////m17
+
+        //static void IncreaseXP(int exp) // evil witchcraft
+
+        //{
+        //    // Random randomXP = new Random();
+        //    int giveXP = randomXP.Next(15, 30);
+
+        //    exp = giveXP; //randomizes exp
+        //    xp += exp; //modifies xp to be  xp + exp
+
+        //    if (xp >= (level * 100)) // defines level of xp where level will increase
+        //    {
+        //        level++; //increases level by 1
+
+        //    }
+        //}
 
 
 

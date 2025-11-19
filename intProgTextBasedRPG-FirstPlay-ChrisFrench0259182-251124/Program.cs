@@ -27,10 +27,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //static string[] Maps = File.ReadAllLines(filepath);
 
 
-        static int enemy_x_pos = 17;
-        static int enemy_y_pos = 20;
-        static (int, int) enemy_min_max_x = (1, 55);
-        static (int, int) enemy_min_max_y = (1, 32);
+        static int enemy_x_pos;
+        static int enemy_y_pos;
+        static (int, int) enemy_min_max_x = (15,35);
+        static (int, int) enemy_min_max_y = (12, 27);
+        static string ehStat;
+        static int enemyHealth;
+        static int enemyDmg;
+
 
         static char mapChar;
         static string filepath = "maps.txt";
@@ -44,11 +48,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         static (int, int) healthPrize;
 
-        static int treasure_x_pos = 6;
-        static int treasure_y_pos = 19;
-        static (int, int) treasure_min_max_x = (1, 55);
-        static (int, int) treasure_min_max_y = (1, 32);
-        
+        static int treasure_x_pos;
+        static int treasure_y_pos;
+        static (int, int) treasure_min_max_x = (9, 45);
+        static (int, int) treasure_min_max_y = (7, 20);
+        static int HealthUp;
         static ConsoleColor[] spriteColors = { ConsoleColor.Cyan, ConsoleColor.Red,ConsoleColor.Magenta };
         
         static bool healthTreasure = true;
@@ -198,10 +202,39 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.SetCursorPosition(p1_Old_X, p1_Old_Y) ;
             Console.Write(mapChar);
             #region //enemy and health spawns 
+
+          
+            if (EnemySpawn)
+            {
+
+                EnemySpawn = false;
+                enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2 + 1);
+                enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2 + 1);
+                healthPrize = (enemy_x_pos, enemy_y_pos);
+                Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                Console.ForegroundColor = spriteColors[1];
+                Console.Write("#");
+            }
             
-            //Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
-            //Console.ForegroundColor = spriteColors[1];
-            //Console.Write("#");
+
+            if (healthTreasure)
+            {
+
+                healthTreasure = false;
+                treasure_x_pos = healthPackSpawn.Next(treasure_min_max_x.Item1, treasure_min_max_x.Item2 + 1);
+                treasure_y_pos = healthPackSpawn.Next(treasure_min_max_y.Item1, treasure_min_max_y.Item2 + 1);
+                healthPrize = (treasure_x_pos, treasure_y_pos);
+                Console.SetCursorPosition(treasure_x_pos, treasure_y_pos);
+                Console.ForegroundColor = spriteColors[2];
+                Console.Write("$");
+            }
+
+
+
+
+            
+
+
 
             //if (healthTreasure)
             //{
@@ -318,9 +351,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.WriteLine($"{character}");
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}", "Score", "Life", "Attack", "Hurt");
+            Console.WriteLine("{0,0}{1,8}{2,12}{3,9}{4,9}", "Score", "Life", "Attack", "Hurt", "Enemy Looks");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0,2}{1,10}{2,10}{3,10}", score, health, dmg, hurt + "\n");
+            Console.WriteLine("{0,2}{1,10}{2,10}{3,10}{3,10}", score, health, dmg, hurt, ehStat + "\n");
             Console.ResetColor();
 
 

@@ -1,9 +1,9 @@
 +~~~~~~~~~~~~~~~~ LAND OF  NEVERWHERE ~~~~~~~~~~~~~~~~~~+
-|-------------------------------------------------------|
-|g,g,g,g,g,g,g,g,g,m,m,m,m,g,g,m,m,g,g,g,g,m,m,w,w,w,w,w|
-|g,g,g,g,g,g,g,g,g,g,g,m,m,g,g,t,t,t,g,g,g,g,m,w,w,w,w,w|
-|g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,t,g,g,g,g,g,w,w,w,w,w,g|
-|g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,t,g,g,g,g,g,w,w,g,g,w,g|
+|g,g,g,g,g,g,g,m,m,m,m,m,m,m,g,m,m,m,t,t,m,m,m,w,w,w,w,w|
+|g,g,g,g,g,g,g,g,g,m,m,m,m,g,g,m,m,t,t,t,g,m,m,w,w,w,w,w|
+|g,g,g,g,g,g,g,g,g,g,g,m,m,g,g,t,t,t,t,t,t,g,m,w,w,w,w,w|
+|g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,t,g,t,t,g,g,w,w,w,w,w,g|
+|g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,t,g,g,t,g,g,w,w,g,g,w,g|
 |g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,g,g,g,g,g,w,w,g,g,w,w|
 |g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,t,g,g,g,g,g,w,w,w,w,w,g|
 |g,g,g,g,w,w,w,g,g,g,g,g,g,g,t,g,t,g,g,g,g,g,g,w,w,w,g,g|

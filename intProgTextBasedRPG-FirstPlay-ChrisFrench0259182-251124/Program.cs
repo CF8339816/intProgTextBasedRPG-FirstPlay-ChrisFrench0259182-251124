@@ -101,7 +101,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int maxhealth = 100;
         static int hp;
 
-        //static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
+       static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
 
 
         ////static string healthStatus;
@@ -109,7 +109,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int minshield = 0;
         static int maxshield = 100;
         static int sHp;
-        //static int clampedshield = shield < minshield ? minshield : (shield > maxshield ? maxshield : shield);
+       static int clampedshield = shield < minshield ? minshield : (shield > maxshield ? maxshield : shield);
 
 
         //static int lives = 3;
@@ -678,9 +678,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.Write("you a vial of shield oil using it on your ");
 
             Console.SetCursorPosition(output_X + 2, output_Y + 18);
-            Console.WriteLine($"wooden buckler strengthing it for: ");
+            Console.Write($"wooden buckler strengthing it for: ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(sHp);
+            Console.Write( sHp);
 
         }
         ////m14
@@ -721,111 +721,117 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         ////m16
         static void TakeDamage()
         {
-            EnemyHealth();
-            Console.ForegroundColor = ConsoleColor.Red;
+            if (player1_positionPROXY == enemyLoc)
+            {
+                EnemyHealth();
+                Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.SetCursorPosition(output_X, output_Y + 20);
-            string Kapow =
-"+========= Damage output ============+";
-            Console.WriteLine($" {Kapow}\n");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(output_X + 2, output_Y + 21);
-            Console.Write("Player Takes ");
+                Random randomEnDMG = new Random();
+                int enemydmg = randomEnDMG.Next(12, 35);
 
-            Console.SetCursorPosition(output_X + 22, output_Y + 21);
-            Console.WriteLine(enemydmg);
+                Random randomDMG = new Random();
+                int dmg= randomDMG.Next(12, 35);
 
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.SetCursorPosition(output_X + 2, output_Y + 22);
-            Console.Write("Enemy takes: ");
+                Console.SetCursorPosition(output_X, output_Y + 20);
+                string Kapow =
+    "+========= Damage output ============+";
+                Console.WriteLine($" {Kapow}\n");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(output_X + 2, output_Y + 21);
+                Console.Write("Player Takes ");
 
-            Console.SetCursorPosition(output_X + 22, output_Y + 22);
-            Console.WriteLine(dmg);
+                Console.SetCursorPosition(output_X + 22, output_Y + 21);
+                Console.WriteLine(enemydmg);
 
-            //Console.ForegroundColor = ConsoleColor.White;
-            //Console.SetCursorPosition(output_X + 2, output_Y + 20);
-            //Console.Write("Healed for: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.SetCursorPosition(output_X + 2, output_Y + 22);
+                Console.Write("Enemy takes: ");
 
-            //Console.SetCursorPosition(output_X + 22, output_Y + 20);
-            //Console.WriteLine(hp);
-            Console.SetCursorPosition(output_X + 2, output_Y + 23);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write("Enemy Looks: ");
-            Console.SetCursorPosition(output_X + 16, output_Y + 23);
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"{ehStat}");
+                Console.SetCursorPosition(output_X + 22, output_Y + 22);
+                Console.WriteLine(dmg);
 
+                //Console.ForegroundColor = ConsoleColor.White;
+                //Console.SetCursorPosition(output_X + 2, output_Y + 20);
+                //Console.Write("Healed for: ");
 
+                //Console.SetCursorPosition(output_X + 22, output_Y + 20);
+                //Console.WriteLine(hp);
+                Console.SetCursorPosition(output_X + 2, output_Y + 23);
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("Enemy Looks: ");
+                Console.SetCursorPosition(output_X + 16, output_Y + 23);
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine($"{ehStat}");
 
-            //Random randomDMG = new Random();
-            //int enemydmg = randomDMG.Next(12, 35);
+            }
+
             //Console.WriteLine();
-            //    Console.Write($"You take ");
-            //    Console.ForegroundColor = ConsoleColor.Blue;
-            //    Console.Write(enemydmg);
-            //    Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //    Console.WriteLine(" damage...");
+            //Console.Write($"You take ");
+            //Console.ForegroundColor = ConsoleColor.Blue;
+            //Console.Write(enemydmg);
+            //Console.ForegroundColor = ConsoleColor.DarkYellow;
+            //Console.WriteLine(" damage...");
 
-            //    int remainingDamage = enemydmg; //sets up remaining spillover damage
-            //                                    // int remainingDamage2 = remainingDamage;   // sets up remaining slillover hp damage foer disreggard
-            //                                    // Damage the shield first
-            //    if (shield > 0)
-            //    {
-            //        int damageToShield = Math.Min(shield, remainingDamage);
-            //        shield -= damageToShield;
-            //        remainingDamage -= damageToShield;
-            //    }
+            int remainingDamage = enemydmg; //sets up remaining spillover damage
+                                            // int remainingDamage2 = remainingDamage;   // sets up remaining slillover hp damage foer disreggard
+            //                                // Damage the shield first
+            //if (shield > 0)
+            //{
+            //    int damageToShield = Math.Min(shield, remainingDamage);
+            //    shield -= damageToShield;
+            //    remainingDamage -= damageToShield;
+            //}
+
+            //if (remainingDamage > 0)
 
             //    if (remainingDamage > 0)
+            //    {
+                    if (health >= 0)
+                    {
 
-            //        if (remainingDamage > 0)
-            //        {
-            //            if (health >= 0)
-            //            {
-            //               
-            //                health -= remainingDamage;
-            //            }
+                        health -= remainingDamage;
+                    }
 
-            //            else if (health <= 0 && lives > 0)
-            //            {
+                    else if (health <= 0 )
+                    {
 
-            //                lives--;
+                    //    lives--;
 
-            //                // Console.ForegroundColor = ConsoleColor.Magenta;
-            //                // Console.WriteLine($"You have died, applying resurection.");
-            //                // Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //                Revive();
-            //            }
+                    //    // Console.ForegroundColor = ConsoleColor.Magenta;
+                    //    // Console.WriteLine($"You have died, applying resurection.");
+                    //    // Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    //    Revive();
+                    //}
 
-            //            else
-            //            {
-            //                Console.ForegroundColor = ConsoleColor.Magenta;
-            //                Console.WriteLine($"You have died, Game over. \n\n Your ending stats:.....\n");
-            //                Console.ForegroundColor = ConsoleColor.DarkYellow;
-            //                Console.ReadKey();
-            //                Console.Clear();
+                    //else
+                    //{
+                        Console.ForegroundColor = ConsoleColor.Magenta;
+                        Console.WriteLine($"You have died, Game over. \n\n Your ending stats:.....\n");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.ReadKey();
+                        Console.Clear();
 
-            //            }
-            //        }
-        }
+                    }
+                }
+        //}
 
         ////m17
 
-        //static void IncreaseXP(int exp) // evil witchcraft
+        static void IncreaseXP(int exp) // evil witchcraft
 
-        //{
-        //    // Random randomXP = new Random();
-        //    int giveXP = randomXP.Next(15, 30);
+        {
+            // Random randomXP = new Random();
+            int giveXP = randomXP.Next(15, 30);
 
-        //    exp = giveXP; //randomizes exp
-        //    xp += exp; //modifies xp to be  xp + exp
+            exp = giveXP; //randomizes exp
+            xp += exp; //modifies xp to be  xp + exp
 
-        //    if (xp >= (level * 100)) // defines level of xp where level will increase
-        //    {
-        //        level++; //increases level by 1
+            if (xp >= (level * 100)) // defines level of xp where level will increase
+            {
+                level++; //increases level by 1
 
-        //    }
-        //}
+            }
+        }
 
 
 

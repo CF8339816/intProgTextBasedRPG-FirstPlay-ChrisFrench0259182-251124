@@ -886,19 +886,19 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m23
         static void ChkWinCond()
         {
-            // Convert 1-based console coordinates to 0-based array indices
+            
             int mapY = p1_y_pos - 1;
             int mapX = p1_x_pos - 1;
 
-            // Basic boundary check (should always pass if using CanMoveTo)
+            
             if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
             {
                 char tileUnderPlayer = Maps[mapY][mapX];
 
-                // Check if the tile is the 'b' (base) tile
+                
                 if (tileUnderPlayer == 'b')
                 {
-                    // Trigger the win condition logic
+                    
                     WnrWnrChknDnnr();
 
                 }

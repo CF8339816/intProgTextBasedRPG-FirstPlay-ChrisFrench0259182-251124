@@ -154,27 +154,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 ProcessInput();
                 GameUpdate();
-               // ErasePlayer();
                 DrawP();
-                ChkWinCond();
-                //EraseEnemy();
-                MoveEnemy();
                 DrawE();
                 DrawH();
                 hud();
                 DeBug();
                 TakeDamage();
 
-                #region //tried a while incombat. broke the game
-                // while (inCombat)
-                //{
-                //    ProcessInput();
-
-                //    GameUpdate();
-
-                //    //TakeDamage();
-                //}
-                #endregion
+              
             }
 
 
@@ -351,51 +338,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ResetColor();
         }
-        ////m4
-        //static bool CanMoveTo(int x, int y)
-        //{
-        //    int mapYs = y - 1;
-        //    int mapXs = x - 1;
-
-        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-        //    {
-        //        return false;
-        //    }
-
-        //    char mapTile= Maps[mapYs][mapXs];
-
-        //    if (mapTile == 'm' || mapTile == 'w')
-        //    {
-        //        return false;
-        //    }
-
-        //    #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-        //    //if (mapTile == 't' )
-        //    //{
-
-        //    //    return true;
-        //    //    Thread.Sleep(2000);
-
-        //    //}
-
-
-        //    //if (mapTile == 'g' )
-        //    //{
-
-        //    //    return true;
-        //    //    Thread.Sleep(1000);
-        //    //}
-        //    #endregion
-
-        //    return true;
-        //}
+       
         //m5
         static void ProcessInput()
         {
-            // player1_positionOLD = player1_positionPROXY;
-
-            //CanMoveTo(mapXs, mapYs);
-
+           
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
 
@@ -416,8 +363,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            //CanMoveTo(mapXs, mapYs);
-
+           
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
 
@@ -426,10 +372,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             player1_positionPROXY = (p1_x_pos, p1_y_pos);
 
-            if (EnemySpawn && !inCombat)
-            {
-                MoveEnemy();
-            }
 
             if (player1_positionPROXY == HealthUp)
             {
@@ -439,7 +381,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (player1_positionPROXY == enemyLoc)
             {
-                // inCombat = true;
+              
                 damageDealt();
                 damageTaken();
                
@@ -448,7 +390,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                     EnemySpawn = true;
                 }
             }
-            ChkWinCond();
+            
         }
         //m7
         static void alias()
@@ -616,55 +558,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         }
         //m12B
 
-        static void MoveEnemy()
-        {
-            EraseEnemy();
-      
-            int eMove_x = enemy_x_pos;
-            int eMove_y = enemy_y_pos;
-
-            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
-            int deltaY = p1_y_pos - enemy_y_pos;
-
-            bool moved = false;
-
-            if (Math.Abs(deltaX) > Math.Abs(deltaY))
-            {
-                if (deltaX > 0) eMove_x++;
-                else if (deltaX < 0) eMove_x--;
-
-                //if (CanMoveTo(eMove_x, enemy_y_pos))
-                //{
-                //    enemy_Old_X = enemy_x_pos;
-
-                //    enemy_x_pos = eMove_x;
-                //    moved = true;
-                //}
-            }
-
-            if (!moved)
-            {
-                eMove_x = enemy_x_pos;
-                eMove_y = enemy_y_pos;
-
-                if (deltaY > 0) eMove_y++;
-                else if (deltaY < 0) eMove_y--;
-
-                //if (CanMoveTo(enemy_x_pos, eMove_y))
-                //{
-                //    enemy_Old_Y = enemy_y_pos;
-
-                //    enemy_y_pos = eMove_y;
-                //    moved = true;
-                //}
-            }
-
-            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
-            {
-                TakeDamage();
-            }
-        }
-
+        
         //m13
         static void DrawE()
         {
@@ -705,15 +599,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             if (eHealth == 100) ehStat = "Looks Healthy";
             
-            else if (eHealth <= 75) ehStat = "looks Hurt";
+            if (eHealth <= 75) ehStat = "looks Hurt";
             
-            else if (eHealth <= 50) ehStat = "looks Bloodied ";
+            if (eHealth <= 50) ehStat = "looks Bloodied ";
            
-            else if (eHealth <= 25) ehStat = "Looks Injured ";
+            if (eHealth <= 25) ehStat = "Looks Injured ";
             
-            else if (eHealth <= 10) ehStat = "Looks Mortally wounded ";
+            if (eHealth <= 10) ehStat = "Looks Mortally wounded ";
             
-            else if (eHealth <= 0) ehStat = " Um...Sleeping... ";
+            if (eHealth <= 0) ehStat = " Um...Sleeping... ";
             
         }
         //m17
@@ -721,15 +615,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             if (health == 100) phStat = "Looks Healthy";
             
-            else if (health <= 75) phStat = "looks Hurt";
+            if (health <= 75) phStat = "looks Hurt";
             
-            else if (health <= 50) phStat = "looks Bloodied ";
+            if (health <= 50) phStat = "looks Bloodied ";
            
-            else if (health <= 25) phStat = "Looks Injured ";
+            if (health <= 25) phStat = "Looks Injured ";
             
-            else if (health <= 10) phStat = "Looks Mortally wounded ";
+            if (health <= 10) phStat = "Looks Mortally wounded ";
             
-            else if (health <= 0) phStat = " Um...Sleeping... ";
+            if (health <= 0) phStat = " Um...Sleeping... ";
            
         }
         //m18
@@ -884,48 +778,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
         }
         //m23
-        static void ChkWinCond()
-        {
-            
-            int mapY = p1_y_pos - 1;
-            int mapX = p1_x_pos - 1;
-
-            
-            if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
-            {
-                char mapTile = Maps[mapY][mapX];
-
-                
-                if (mapTile == 'b')
-                {
-                    
-                    WnrWnrChknDnnr();
-
-                }
-            }
-        }
-        //m24
-        static void WnrWnrChknDnnr()
-        {
-
-            GameOver();
-
-            Console.SetCursorPosition(output_X + 2, output_Y + 30);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"You made it back to base, you won!! ");
-            Console.SetCursorPosition(output_X + 2, output_Y + 31);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"Your XP = {xp}, your level is {level}... ");
-            Console.SetCursorPosition(output_X + 2, output_Y + 32);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"You have 'Sleep-ed' {kills} enemies, and have used {score} potion soaked bandages");
-            Console.SetCursorPosition(output_X + 2, output_Y + 34);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine($"Press 'Q' to exit. ");
-
-
-        }
-        //m25 
+      
         static void GameOver()
         {
 

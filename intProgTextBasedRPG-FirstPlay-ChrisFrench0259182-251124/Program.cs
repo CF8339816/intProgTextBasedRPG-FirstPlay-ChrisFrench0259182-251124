@@ -50,6 +50,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         
         static int enemy_x_pos;
         static int enemy_y_pos;
+        static int enemy_Old_X;
+        static int enemy_Old_Y;
         static (int, int) enemy_min_max_x = (15, 35);
         static (int, int) enemy_min_max_y = (12, 29);
         static string ehStat;
@@ -138,13 +140,19 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 ProcessInput();
 
                 GameUpdate();
+               
+              
+                //Console.SetCursorPosition(0, 0); 
+                //DrawMap();
                 ErasePlayer();
                 DrawP();
+                EraseEnemy();
+               // MoveEnemyToPlr();
                 DrawE();
-                DrawH();
-
+                DrawH(); 
                 hud();
                 DeBug();
+
 
                 // while (inCombat)
                 //{
@@ -156,10 +164,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 //}
 
             }
-
             
-           
-          
 
         }
         //m1
@@ -347,37 +352,37 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         //m3
 
-        //static bool CanMoveTo(int x, int y)
-        //{
-            
-        //    int mapYs = y - 1;
-        //    int mapXs = x - 1;
+        static bool CanMoveTo(int x, int y)
+        {
 
-          
-        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-        //    {
-        //        return false;
-        //    }
+            int mapYs = y - 1;
+            int mapXs = x - 1;
 
-          
-        //    char tile = Maps[mapYs][mapXs];
 
-          
-        //    if (tile == 'm' || tile == 'w' )
-        //    {
-                
-        //        return false;
-        //    }
+            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+            {
+                return false;
+            }
 
-           
-        //    return true;
-        //}
+
+            char tile = Maps[mapYs][mapXs];
+
+
+            if (tile == 'm' || tile == 'w')
+            {
+
+                return false;
+            }
+
+
+            return true;
+        }
 
         static void ProcessInput()
         {
             // player1_positionOLD = player1_positionPROXY;
          
-            //  CanMoveTo(mapXs, mapYs);
+             CanMoveTo(mapXs, mapYs);
             
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -399,7 +404,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m4
         static void GameUpdate()
         {
-         //   CanMoveTo(mapXs, mapYs);
+           CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -408,6 +413,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             p1_y_pos = Math.Max(p1_min_max_y.Item1, Math.Min(p1_y_pos, p1_min_max_y.Item2));
 
             player1_positionPROXY = (p1_x_pos, p1_y_pos);
+
+            if (EnemySpawn && !inCombat)
+            {
+                MoveEnemyToPlr();
+            }
 
             if (player1_positionPROXY == HealthUp) 
             {
@@ -421,7 +431,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                // inCombat = true;
                TakeDamage();    
                 score++;
-                EnemySpawn = true;
+                if (eHealth <= 0)
+                    {
+                    EnemySpawn = true;
+                    }
             }
         }
         //m5
@@ -438,7 +451,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             PlayerHealth();
           
-            //Console.Clear();
+           // Console.Clear();
             Console.SetCursorPosition(output_X, output_Y + 5);
             string HUD =
             "+========= HUD ============+";
@@ -467,6 +480,21 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.SetCursorPosition(output_X + 16, output_Y + 9);
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"{phStat}");
+
+            
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.SetCursorPosition(output_X, output_Y + 14);
+            string healing =
+"+========= Healing output ============+";
+            Console.WriteLine($" {healing}\n");
+
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.SetCursorPosition(output_X, output_Y + 20);
+            string Kapow =
+"+========= Damage output ============+";
+            Console.WriteLine($" {Kapow}\n");
+            //Console.ReadKey(true);
         }
         //m7
         static void DeBug()
@@ -499,6 +527,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.SetCursorPosition(output_X + 22, output_Y + 3);
             Console.WriteLine(enemyLoc);
+            //Console.ReadKey(true);
         }
         //m8
         static void ErasePlayer()
@@ -519,9 +548,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                     case 'm': Console.ForegroundColor = ConsoleColor.Gray; break;
                     case 't': Console.ForegroundColor = ConsoleColor.Green; break;
                     case 'b': Console.ForegroundColor = ConsoleColor.DarkGray; break;
-                    case '|': Console.ForegroundColor = ConsoleColor.Yellow; break;
-                    case '-': Console.ForegroundColor = ConsoleColor.Yellow; break;
-                    case '+': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    //case '|': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    //case '-': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                    //case '+': Console.ForegroundColor = ConsoleColor.Yellow; break;
                 }
 
                 Console.Write(originalMapChar);
@@ -541,8 +570,34 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         }
 
         //m9
+        static void EraseEnemy()
+        {
+            int mapX = enemy_Old_X;
+            int mapY = enemy_Old_Y;
 
-        //static void DrawE(enemy)
+            if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
+            {
+                char originalMapChar = Maps[mapY][mapX];
+
+                Console.SetCursorPosition(enemy_Old_X, enemy_Old_Y);
+
+                switch (originalMapChar)
+                {
+                    case 'g': Console.ForegroundColor = ConsoleColor.DarkYellow; break;
+                    case 'w': Console.ForegroundColor = ConsoleColor.Blue; break;
+                    case 'm': Console.ForegroundColor = ConsoleColor.Gray; break;
+                    case 't': Console.ForegroundColor = ConsoleColor.Green; break;
+                    case 'b': Console.ForegroundColor = ConsoleColor.DarkGray; break;
+                        //case '|': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                        //case '-': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                        //case '+': Console.ForegroundColor = ConsoleColor.Yellow; break;
+                }
+
+                Console.Write(originalMapChar);
+                Console.ResetColor();
+            }
+            Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+        }
         static void DrawE()
         {
             if (EnemySpawn)
@@ -554,6 +609,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
                 Console.ForegroundColor = spriteColors[1];
                 Console.Write("#");
+                eHealth = 100;
+
             }
             Console.ResetColor();
         }
@@ -571,6 +628,53 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.Write("$");
             }
             Console.ResetColor();
+        }
+        //m11
+
+        static void MoveEnemyToPlr()
+        {
+            int eMove_x = enemy_x_pos;
+            int eMove_y = enemy_y_pos;
+
+            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
+            int deltaY = p1_y_pos - enemy_y_pos;
+
+            bool moved = false;
+
+            if (Math.Abs(deltaX) > Math.Abs(deltaY))
+            {
+                if (deltaX > 0) eMove_x++;
+                else if (deltaX < 0) eMove_x--;
+
+                if (CanMoveTo(eMove_x, enemy_y_pos))
+                {
+                    enemy_Old_X = enemy_x_pos;
+                    
+                    enemy_x_pos = eMove_x;
+                    moved = true;
+                }
+            }
+                      
+            if (!moved)
+            {
+                eMove_x = enemy_x_pos; 
+                eMove_y = enemy_y_pos;
+
+                if (deltaY > 0) eMove_y++;
+                else if (deltaY < 0) eMove_y--;
+
+                if (CanMoveTo(enemy_x_pos, eMove_y))
+                {
+                    enemy_Old_Y = enemy_y_pos;
+
+                    enemy_y_pos = eMove_y;
+                    moved = true;
+                }
+               
+            }
+
+           
+            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos) TakeDamage();
         }
 
         //m12
@@ -673,10 +777,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (player1_positionPROXY == enemyLoc)
                 {
                     Random randomEnDMG = new Random();
-                    int enemydmg = randomEnDMG.Next(12, 35);
+                    int enemydmg = randomEnDMG.Next(12, 28);
 
                     Random randomDMG = new Random();
-                    int dmg = randomDMG.Next(12, 35);
+                    int dmg = randomDMG.Next(22, 35);
 
                     Console.SetCursorPosition(output_X, output_Y + 20);
                     string Kapow =

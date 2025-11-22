@@ -156,6 +156,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 GameUpdate();
                 ErasePlayer();
                 DrawP();
+                ChkWinCond();
                 EraseEnemy();
                 MoveEnemyToPlr();
                 DrawE();
@@ -359,49 +360,49 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m4
-        //static bool CanMoveTo(int x, int y)
-        //{
-        //    int mapYs = y - 1;
-        //    int mapXs = x - 1;
+        static bool CanMoveTo(int x, int y)
+        {
+            int mapYs = y - 1;
+            int mapXs = x - 1;
 
-        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-        //    {
-        //        return false;
-        //    }
+            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+            {
+                return false;
+            }
 
-        //    char tile = Maps[mapYs][mapXs];
+            char tile = Maps[mapYs][mapXs];
 
-        //    if (tile == 'm' || tile == 'w')
-        //    {
-        //        return false;
-        //    }
+            if (tile == 'm' || tile == 'w')
+            {
+                return false;
+            }
 
-        //    #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-        //    //if (tile == 't' )
-        //    //{
+            #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
+            //if (tile == 't' )
+            //{
 
-        //    //    return true;
-        //    //    Thread.Sleep(2000);
+            //    return true;
+            //    Thread.Sleep(2000);
 
-        //    //}
+            //}
 
 
-        //    //if (tile == 'g' )
-        //    //{
+            //if (tile == 'g' )
+            //{
 
-        //    //    return true;
-        //    //    Thread.Sleep(1000);
-        //    //}
-        //    #endregion
+            //    return true;
+            //    Thread.Sleep(1000);
+            //}
+            #endregion
 
-        //    return true;
-        //}
+            return true;
+        }
         //m5
         static void ProcessInput()
         {
             // player1_positionOLD = player1_positionPROXY;
 
-            //CanMoveTo(mapXs, mapYs);
+            CanMoveTo(mapXs, mapYs);
 
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -423,7 +424,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            //CanMoveTo(mapXs, mapYs);
+            CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -668,13 +669,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaX > 0) eMove_x++;
                 else if (deltaX < 0) eMove_x--;
 
-                //if (CanMoveTo(eMove_x, enemy_y_pos))
-                //{
-                //    enemy_Old_X = enemy_x_pos;
+                if (CanMoveTo(eMove_x, enemy_y_pos))
+                {
+                    enemy_Old_X = enemy_x_pos;
 
-                //    enemy_x_pos = eMove_x;
-                //    moved = true;
-                //}
+                    enemy_x_pos = eMove_x;
+                    moved = true;
+                }
             }
 
             if (!moved)
@@ -685,13 +686,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaY > 0) eMove_y++;
                 else if (deltaY < 0) eMove_y--;
 
-                //if (CanMoveTo(enemy_x_pos, eMove_y))
-                //{
-                //    enemy_Old_Y = enemy_y_pos;
+                if (CanMoveTo(enemy_x_pos, eMove_y))
+                {
+                    enemy_Old_Y = enemy_y_pos;
 
-                //    enemy_y_pos = eMove_y;
-                //    moved = true;
-                //}
+                    enemy_y_pos = eMove_y;
+                    moved = true;
+                }
             }
 
             if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)

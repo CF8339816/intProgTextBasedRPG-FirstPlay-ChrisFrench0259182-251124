@@ -48,11 +48,26 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static string player;
         static (int, int) player1_positionPROXY;
         static (int, int) player1_positionOLD;
-        static int health = 100;
+        private static int Health = 100;
         static int minhealth = 0;
         static int maxhealth = 100;
+        #region//"clamping" health
+        static int health
+        {
+            get { return Health; }
+            set
+            {
+                // This logic runs every time we do 'Health = X;'
+                if (value<minhealth)
+                    Health = minhealth;
+                else if (value > maxhealth)
+                    Health = maxhealth;
+                else
+                    Health = value;
+            }
+        }
+        #endregion
         static int hp;
-        static int clampedhealth = health < minhealth ? minhealth : (health > maxhealth ? maxhealth : health);
         #endregion
 
         #region // output field
@@ -93,7 +108,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int dmgE = 0;
         static int myDmg = 0;
         #endregion
-
 
         #region //healing pickups
         static (int, int) HealthUp = (treasure_x_pos, treasure_y_pos);
@@ -345,49 +359,49 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m4
-        static bool CanMoveTo(int x, int y)
-        {
-            int mapYs = y - 1;
-            int mapXs = x - 1;
+        //static bool CanMoveTo(int x, int y)
+        //{
+        //    int mapYs = y - 1;
+        //    int mapXs = x - 1;
 
-            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-            {
-                return false;
-            }
+        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+        //    {
+        //        return false;
+        //    }
 
-            char tile = Maps[mapYs][mapXs];
+        //    char tile = Maps[mapYs][mapXs];
 
-            if (tile == 'm' || tile == 'w')
-            {
-                return false;
-            }
+        //    if (tile == 'm' || tile == 'w')
+        //    {
+        //        return false;
+        //    }
 
-            #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-            //if (tile == 't' )
-            //{
+        //    #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
+        //    //if (tile == 't' )
+        //    //{
 
-            //    return true;
-            //    Thread.Sleep(2000);
+        //    //    return true;
+        //    //    Thread.Sleep(2000);
 
-            //}
+        //    //}
 
 
-            //if (tile == 'g' )
-            //{
+        //    //if (tile == 'g' )
+        //    //{
 
-            //    return true;
-            //    Thread.Sleep(1000);
-            //}
-            #endregion
+        //    //    return true;
+        //    //    Thread.Sleep(1000);
+        //    //}
+        //    #endregion
 
-            return true;
-        }
+        //    return true;
+        //}
         //m5
         static void ProcessInput()
         {
             // player1_positionOLD = player1_positionPROXY;
 
-            CanMoveTo(mapXs, mapYs);
+            //CanMoveTo(mapXs, mapYs);
 
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -409,7 +423,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            CanMoveTo(mapXs, mapYs);
+            //CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -427,7 +441,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (player1_positionPROXY == HealthUp)
             {
                 Heal();
-                score++;
                 healthTreasure = true;
             }
 
@@ -436,12 +449,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 // inCombat = true;
                 damageDealt();
                 damageTaken();
-                score++;
+               
                 if (eHealth <= 0)
                 {
                     EnemySpawn = true;
                 }
             }
+            ChkWinCond();
         }
         //m7
         static void alias()
@@ -480,7 +494,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.WriteLine("                                                                                                           ");
             Console.SetCursorPosition(output_X + 2, output_Y + 8);
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}{6,10}", xp, level, kills, score, clampedhealth, myDmg, hurt + "\n");
+            Console.WriteLine("{0,1}{1,8}{2,8}{3,11}{4,9}{5,10}{6,10}", xp, level, kills, score, health, myDmg, hurt + "\n");
             Console.ResetColor();
 
             Console.SetCursorPosition(output_X + 2, output_Y + 9);
@@ -654,13 +668,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaX > 0) eMove_x++;
                 else if (deltaX < 0) eMove_x--;
 
-                if (CanMoveTo(eMove_x, enemy_y_pos))
-                {
-                    enemy_Old_X = enemy_x_pos;
+                //if (CanMoveTo(eMove_x, enemy_y_pos))
+                //{
+                //    enemy_Old_X = enemy_x_pos;
 
-                    enemy_x_pos = eMove_x;
-                    moved = true;
-                }
+                //    enemy_x_pos = eMove_x;
+                //    moved = true;
+                //}
             }
 
             if (!moved)
@@ -671,13 +685,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaY > 0) eMove_y++;
                 else if (deltaY < 0) eMove_y--;
 
-                if (CanMoveTo(enemy_x_pos, eMove_y))
-                {
-                    enemy_Old_Y = enemy_y_pos;
+                //if (CanMoveTo(enemy_x_pos, eMove_y))
+                //{
+                //    enemy_Old_Y = enemy_y_pos;
 
-                    enemy_y_pos = eMove_y;
-                    moved = true;
-                }
+                //    enemy_y_pos = eMove_y;
+                //    moved = true;
+                //}
             }
 
             if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
@@ -724,11 +738,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (player1_positionPROXY == HealthUp)
             {
                 int regenHealth = randomHealth.Next(15, 75);
-                hp = regenHealth; 
-                                 
+                hp = regenHealth;
+                score += 1;                 
                 if (health < 100)
                 {
                     health = health + hp;
+                     
                 }
             }
 
@@ -789,7 +804,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             if (eHealth >= 0)
             {
-                kills ++;
+                kills +=1;
                 IncreaseXP(xp);
                 Console.SetCursorPosition(output_X + 2, output_Y + 25);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -818,8 +833,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
 
         }
-
-            //inCombat = false;
+        //m21        
         static void damageTaken()
         { 
             if (health >= 0)
@@ -836,6 +850,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.SetCursorPosition(output_X + 2, output_Y + 30);
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"You have died, Game over. ");
+                Console.SetCursorPosition(output_X + 2, output_Y + 31);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"Your XP = {xp}, your level is {level}... ");
+                Console.SetCursorPosition(output_X + 2, output_Y + 32);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"You have 'Sleep-ed' {kills} enemies, and have used {score} potion soaked bandages");
+                Console.SetCursorPosition(output_X + 2, output_Y + 34);
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine($"Press 'Q' to exit. ");
+
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"Press 'Q' to exit. ");
                // Console.ReadKey();
@@ -843,7 +867,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 //inCombat = false;
             }
         }
-        ////m17
+        //m22
         static void IncreaseXP(int exp) // evil witchcraft
         {
             // Random randomXP = new Random();
@@ -858,8 +882,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             }
         }
-
-        static void CheckWinCondition()
+        //m23
+        static void ChkWinCond()
         {
             // Convert 1-based console coordinates to 0-based array indices
             int mapY = p1_y_pos - 1;
@@ -879,8 +903,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 }
             }
         }
-        //m18
-
+        //m24
         static void WnrWnrChknDnnr()
         {
 
@@ -894,33 +917,23 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.WriteLine($"Your XP = {xp}, your level is {level}... ");
             Console.SetCursorPosition(output_X + 2, output_Y + 32);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"You have 'Sleep-ed' {kills}, and have used {score} potion soaked bandages");
+            Console.WriteLine($"You have 'Sleep-ed' {kills} enemies, and have used {score} potion soaked bandages");
             Console.SetCursorPosition(output_X + 2, output_Y + 34);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine($"Press 'Q' to exit. ");
 
 
         }
-
-
-        //m19 
-
+        //m25 
         static void GameOver()
         {
-
 
             Console.SetCursorPosition(output_X, output_Y + 28);
             string GO =
 "+========= Game Over ============+";
             Console.WriteLine($" {GO}\n");
 
-          
-
         }
-
-
-
-
 
     }
 }

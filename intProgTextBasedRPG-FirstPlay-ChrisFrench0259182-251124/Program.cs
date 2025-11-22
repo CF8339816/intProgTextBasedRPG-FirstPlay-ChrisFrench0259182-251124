@@ -154,8 +154,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 ProcessInput();
                 GameUpdate();
+                ErasePOld();
                 DrawP();
+
                 DrawE();
+                //EraseEOld();
+                //MoveEtoP();
                 DrawH();
                 hud();
                 DeBug();
@@ -163,8 +167,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
               
             }
-
-
         }
         //m1
         static void DrawMap()
@@ -289,12 +291,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         }
 
 
-
-
-
-
-
-
         //m3
         static void mapLegend()
         {
@@ -338,11 +334,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ResetColor();
         }
-       
+
         //m5
+
         static void ProcessInput()
         {
-           
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
 
@@ -351,7 +347,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             ConsoleKey input = Console.ReadKey(true).Key;
 
-            // check all input keys
+            
             if (input == ConsoleKey.A) p1_x_input = -1;
             if (input == ConsoleKey.D) p1_x_input = 1;
             if (input == ConsoleKey.W) p1_y_input = -1;
@@ -359,19 +355,21 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (input == ConsoleKey.Q) isPlaying = false; //Quit the 'is playing' loop
 
+            //ErasePOld();
         }
-        //m6
+
+        //m6 
         static void GameUpdate()
         {
-           
+            
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
 
+          
             p1_x_pos = Math.Max(p1_min_max_x.Item1, Math.Min(p1_x_pos, p1_min_max_x.Item2));
             p1_y_pos = Math.Max(p1_min_max_y.Item1, Math.Min(p1_y_pos, p1_min_max_y.Item2));
 
             player1_positionPROXY = (p1_x_pos, p1_y_pos);
-
 
             if (player1_positionPROXY == HealthUp)
             {
@@ -381,17 +379,18 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (player1_positionPROXY == enemyLoc)
             {
-              
+
                 damageDealt();
                 damageTaken();
-               
+
                 if (eHealth <= 0)
                 {
                     EnemySpawn = true;
                 }
             }
-            
         }
+        
+       
         //m7
         static void alias()
         {
@@ -491,36 +490,40 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //Console.ReadKey(true);
         }
         //m10
-        static void ErasePlayer()
+        static void ErasePOld()
         {
+            
             int mapX = p1_Old_X;
             int mapY = p1_Old_Y;
 
-            if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
-            {
-                char mapTile = Maps[mapY][mapX];
+        
+            //if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
+            //{
+               char MapTile = Maps[mapY][mapX];
 
                 Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
 
-                switch (mapTile)
+                
+                switch (MapTile)
                 {
                     case 'g': Console.ForegroundColor = ConsoleColor.DarkYellow; break;
                     case 'w': Console.ForegroundColor = ConsoleColor.Blue; break;
                     case 'm': Console.ForegroundColor = ConsoleColor.Gray; break;
                     case 't': Console.ForegroundColor = ConsoleColor.Green; break;
                     case 'b': Console.ForegroundColor = ConsoleColor.DarkGray; break;
-                       
+                    
                 }
 
-                Console.Write(mapTile);
+               
+                Console.Write(MapTile);
                 Console.ResetColor();
-            }
+            //}
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
         }
         //m11
         static void DrawP()
         {
-            ErasePlayer();
+            
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
 
             Console.ForegroundColor = spriteColors[0];
@@ -530,7 +533,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         }
         //m12
-        static void EraseEnemy()
+        static void EraseEOld()
         {
             int mapX = enemy_Old_X;
             int mapY = enemy_Old_Y;

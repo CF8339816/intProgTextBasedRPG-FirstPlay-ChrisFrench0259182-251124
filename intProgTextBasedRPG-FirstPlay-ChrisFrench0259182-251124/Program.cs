@@ -92,7 +92,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         #endregion
 
         #region//map
-        static char mapChar;
+        static char mapTile;
         static string filepath = "maps.txt";
         static string[] Maps;
         static string map;
@@ -154,11 +154,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 ProcessInput();
                 GameUpdate();
-                ErasePlayer();
+               // ErasePlayer();
                 DrawP();
                 ChkWinCond();
-                EraseEnemy();
-                MoveEnemyToPlr();
+                //EraseEnemy();
+                MoveEnemy();
                 DrawE();
                 DrawH();
                 hud();
@@ -191,13 +191,15 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
                 foreach (string map in Maps)
                 {
-
-                    foreach (char mapChar in map)
+                    //foreach (char mapChar in map)
+                        foreach (char mapTile in map)
                     {
-
-                        switch (mapChar)
+                       
+                       // switch (mapChar)
+                            switch (mapTile)
 
                         {
+                           
                             #region // colouring the individual tiles
                             case 'g': // Grass
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -240,7 +242,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                                 #endregion
                         }
                         //Console.SetCursorPosition(0, 0);
-                        Console.Write(mapChar);
+                        Console.Write(mapTile);
 
                     }
 
@@ -263,59 +265,49 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
         }
         //m2
-        static void maptile()
+
+        static void MapChar()
         {
-
-            switch (mapChar)
-
+            switch (mapTile)
             {
                 #region // colouring the individual tiles
                 case 'g': // Grass
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-
                     break;
-
                 case 'w': // Water
                     Console.ForegroundColor = ConsoleColor.Blue;
-
                     break;
-
                 case 'm': // Mountain
                     Console.ForegroundColor = ConsoleColor.Gray;
-
                     break;
-
                 case 't': // Trees
                     Console.ForegroundColor = ConsoleColor.Green;
-
                     break;
                 case 'b': // Base
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-
                     break;
-
                 case '|': //Border
                     Console.ForegroundColor = ConsoleColor.Yellow;
-
                     break;
-
                 case '-': // Border
                     Console.ForegroundColor = ConsoleColor.Yellow;
-
                     break;
-
                 case '+': // Border
                     Console.ForegroundColor = ConsoleColor.Yellow;
-
                     break;
-
                     #endregion
             }
             //Console.SetCursorPosition(0, 0);
-            Console.Write(mapChar);
-
-
+            Console.Write(mapTile);
         }
+
+
+
+
+
+
+
+
         //m3
         static void mapLegend()
         {
@@ -359,50 +351,50 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.ResetColor();
         }
-        //m4
-        static bool CanMoveTo(int x, int y)
-        {
-            int mapYs = y - 1;
-            int mapXs = x - 1;
+        ////m4
+        //static bool CanMoveTo(int x, int y)
+        //{
+        //    int mapYs = y - 1;
+        //    int mapXs = x - 1;
 
-            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-            {
-                return false;
-            }
+        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+        //    {
+        //        return false;
+        //    }
 
-            char tile = Maps[mapYs][mapXs];
+        //    char mapTile= Maps[mapYs][mapXs];
 
-            if (tile == 'm' || tile == 'w')
-            {
-                return false;
-            }
+        //    if (mapTile == 'm' || mapTile == 'w')
+        //    {
+        //        return false;
+        //    }
 
-            #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-            //if (tile == 't' )
-            //{
+        //    #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
+        //    //if (mapTile == 't' )
+        //    //{
 
-            //    return true;
-            //    Thread.Sleep(2000);
+        //    //    return true;
+        //    //    Thread.Sleep(2000);
 
-            //}
+        //    //}
 
 
-            //if (tile == 'g' )
-            //{
+        //    //if (mapTile == 'g' )
+        //    //{
 
-            //    return true;
-            //    Thread.Sleep(1000);
-            //}
-            #endregion
+        //    //    return true;
+        //    //    Thread.Sleep(1000);
+        //    //}
+        //    #endregion
 
-            return true;
-        }
+        //    return true;
+        //}
         //m5
         static void ProcessInput()
         {
             // player1_positionOLD = player1_positionPROXY;
 
-            CanMoveTo(mapXs, mapYs);
+            //CanMoveTo(mapXs, mapYs);
 
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -424,7 +416,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            CanMoveTo(mapXs, mapYs);
+            //CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -436,7 +428,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (EnemySpawn && !inCombat)
             {
-                MoveEnemyToPlr();
+                MoveEnemy();
             }
 
             if (player1_positionPROXY == HealthUp)
@@ -564,11 +556,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
             {
-                char origMapChar = Maps[mapY][mapX];
+                char mapTile = Maps[mapY][mapX];
 
                 Console.SetCursorPosition(p1_Old_X, p1_Old_Y);
 
-                switch (origMapChar)
+                switch (mapTile)
                 {
                     case 'g': Console.ForegroundColor = ConsoleColor.DarkYellow; break;
                     case 'w': Console.ForegroundColor = ConsoleColor.Blue; break;
@@ -578,7 +570,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                        
                 }
 
-                Console.Write(origMapChar);
+                Console.Write(mapTile);
                 Console.ResetColor();
             }
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
@@ -586,6 +578,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m11
         static void DrawP()
         {
+            ErasePlayer();
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
 
             Console.ForegroundColor = spriteColors[0];
@@ -602,11 +595,11 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
             {
-                char origMapChar = Maps[mapY][mapX];
+                char mapTile = Maps[mapY][mapX];
 
                 Console.SetCursorPosition(enemy_Old_X, enemy_Old_Y);
 
-                switch (origMapChar)
+                switch (mapTile)
                 {
                     case 'g': Console.ForegroundColor = ConsoleColor.DarkYellow; break;
                     case 'w': Console.ForegroundColor = ConsoleColor.Blue; break;
@@ -616,11 +609,62 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                      
                 }
 
-                Console.Write(origMapChar);
+                Console.Write(mapTile);
                 Console.ResetColor();
             }
             Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
         }
+        //m12B
+
+        static void MoveEnemy()
+        {
+            EraseEnemy();
+      
+            int eMove_x = enemy_x_pos;
+            int eMove_y = enemy_y_pos;
+
+            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
+            int deltaY = p1_y_pos - enemy_y_pos;
+
+            bool moved = false;
+
+            if (Math.Abs(deltaX) > Math.Abs(deltaY))
+            {
+                if (deltaX > 0) eMove_x++;
+                else if (deltaX < 0) eMove_x--;
+
+                //if (CanMoveTo(eMove_x, enemy_y_pos))
+                //{
+                //    enemy_Old_X = enemy_x_pos;
+
+                //    enemy_x_pos = eMove_x;
+                //    moved = true;
+                //}
+            }
+
+            if (!moved)
+            {
+                eMove_x = enemy_x_pos;
+                eMove_y = enemy_y_pos;
+
+                if (deltaY > 0) eMove_y++;
+                else if (deltaY < 0) eMove_y--;
+
+                //if (CanMoveTo(enemy_x_pos, eMove_y))
+                //{
+                //    enemy_Old_Y = enemy_y_pos;
+
+                //    enemy_y_pos = eMove_y;
+                //    moved = true;
+                //}
+            }
+
+            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
+            {
+                TakeDamage();
+            }
+        }
+
         //m13
         static void DrawE()
         {
@@ -654,52 +698,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m15
-        static void MoveEnemyToPlr()
-        {
-            int eMove_x = enemy_x_pos;
-            int eMove_y = enemy_y_pos;
 
-            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
-            int deltaY = p1_y_pos - enemy_y_pos;
 
-            bool moved = false;
-
-            if (Math.Abs(deltaX) > Math.Abs(deltaY))
-            {
-                if (deltaX > 0) eMove_x++;
-                else if (deltaX < 0) eMove_x--;
-
-                if (CanMoveTo(eMove_x, enemy_y_pos))
-                {
-                    enemy_Old_X = enemy_x_pos;
-
-                    enemy_x_pos = eMove_x;
-                    moved = true;
-                }
-            }
-
-            if (!moved)
-            {
-                eMove_x = enemy_x_pos;
-                eMove_y = enemy_y_pos;
-
-                if (deltaY > 0) eMove_y++;
-                else if (deltaY < 0) eMove_y--;
-
-                if (CanMoveTo(enemy_x_pos, eMove_y))
-                {
-                    enemy_Old_Y = enemy_y_pos;
-
-                    enemy_y_pos = eMove_y;
-                    moved = true;
-                }
-            }
-
-            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
-            {
-                TakeDamage();
-            }
-        }
         //m16
         static void EnemyHealth()
         {
@@ -893,10 +893,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             
             if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
             {
-                char tileUnderPlayer = Maps[mapY][mapX];
+                char mapTile = Maps[mapY][mapX];
 
                 
-                if (tileUnderPlayer == 'b')
+                if (mapTile == 'b')
                 {
                     
                     WnrWnrChknDnnr();

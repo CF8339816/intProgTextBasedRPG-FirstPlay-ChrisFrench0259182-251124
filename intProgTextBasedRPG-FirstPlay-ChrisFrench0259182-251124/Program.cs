@@ -155,6 +155,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             while (isPlaying)
             {
+                CanMoveTo(mapXs, mapYs);
                 ProcessInput();
                 GameUpdate();
                 ErasePlayer();

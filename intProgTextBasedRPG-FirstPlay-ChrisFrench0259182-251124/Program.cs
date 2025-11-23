@@ -103,9 +103,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         #region //hud
         static int kills = 0;
         static int score = 0;
-       // static int dmg = 0;
+      
         static int hurt = 0;
-       // static int dmgE = 0;
+      
         static int myDmg = 0;
         #endregion
 
@@ -190,7 +190,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Directory.GetCurrentDirectory();
             try
             {
-                string[] Maps = File.ReadAllLines(filepath);
+                 Maps = File.ReadAllLines(filepath);
 
                 foreach (string map in Maps)
                 {

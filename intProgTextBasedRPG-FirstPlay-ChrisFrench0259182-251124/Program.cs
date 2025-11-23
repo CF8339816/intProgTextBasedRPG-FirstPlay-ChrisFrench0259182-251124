@@ -103,9 +103,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         #region //hud
         static int kills = 0;
         static int score = 0;
-        static int dmg = 0;
+       // static int dmg = 0;
         static int hurt = 0;
-        static int dmgE = 0;
+       // static int dmgE = 0;
         static int myDmg = 0;
         #endregion
 
@@ -737,10 +737,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             if (player1_positionPROXY == enemyLoc)
             {
                 
-                int enemydmg = randomEnDMG.Next(12, 28);
-
-                
-                int dmg = randomDMG.Next(22, 35);
+               
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(output_X + 2, output_Y + 21);
@@ -756,9 +753,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.Write("Enemy takes: ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.SetCursorPosition(output_X + 22, output_Y + 22);
-                Console.WriteLine(dmg);
-                myDmg = dmg;
-                eHealth = eHealth - dmg;
+                Console.WriteLine(p1dmg);
+                myDmg = p1dmg;
+                eHealth = eHealth - p1dmg;
 
                 Console.SetCursorPosition(output_X + 2, output_Y + 23);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;

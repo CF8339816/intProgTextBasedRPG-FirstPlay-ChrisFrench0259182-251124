@@ -328,49 +328,49 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m4
-        //static bool CanMoveTo(int x, int y)
-        //{
-        //    int mapYs = y - 1;
-        //    int mapXs = x - 1;
+        static bool CanMoveTo(int x, int y)
+        {
+            int mapYs = y - 1;
+            int mapXs = x - 1;
 
-        //    if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
-        //    {
-        //        return false;
-        //    }
+            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+            {
+                return false;
+            }
 
-        //    char mapTile = Maps[mapYs][mapXs];
+            char mapTile = Maps[mapYs][mapXs];
 
-        //    if (mapTile == 'm' || mapTile == 'w')
-        //    {
-        //        return false;
-        //    }
+            if (mapTile == 'm' || mapTile == 'w')
+            {
+                return false;
+            }
 
-        //    #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-        //    //if (mapTile == 't' )
-        //    //{
+            #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
+            //if (mapTile == 't' )
+            //{
 
-        //    //    return true;
-        //    //    Thread.Sleep(2000);
+            //    return true;
+            //    Thread.Sleep(2000);
 
-        //    //}
+            //}
 
 
-        //    //if (mapTile == 'g' )
-        //    //{
+            //if (mapTile == 'g' )
+            //{
 
-        //    //    return true;
-        //    //    Thread.Sleep(1000);
-        //    //}
-        //    #endregion
+            //    return true;
+            //    Thread.Sleep(1000);
+            //}
+            #endregion
 
-        //    return true;
-        //}
+            return true;
+        }
         //m5
         static void ProcessInput()
         {
-           // player1_positionOLD = player1_positionPROXY;
+            // player1_positionOLD = player1_positionPROXY;
 
-            // CanMoveTo(mapXs, mapYs);
+            CanMoveTo(mapXs, mapYs);
 
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -390,7 +390,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            //CanMoveTo(mapXs, mapYs);
+            CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -421,7 +421,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                     EnemySpawn = true;
                 }
             }
-            // ChkWinCond();
+            ChkWinCond();
         }
         //m7
         static void alias()
@@ -523,7 +523,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.SetCursorPosition(output_X + 2, output_Y + 4);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("enemy health:");
-
+            Console.SetCursorPosition(output_X + 22, output_Y + 4);
+            Console.WriteLine("              ");
             Console.SetCursorPosition(output_X + 22, output_Y + 4);
             Console.WriteLine(eHealth);
 
@@ -532,7 +533,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.Write("player health:");
 
             Console.SetCursorPosition(output_X + 46, output_Y + 4);
-            Console.WriteLine(health);
+            Console.WriteLine("                   ");
+            Console.SetCursorPosition(output_X + 46, output_Y + 4);
+            Console.WriteLine(Health);
         }
         //m10
         static void ErasePlayer()
@@ -830,17 +833,17 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             }
         }
         //m22
-        static void IncreaseXP(int exp) // evil witchcraft
+        static void IncreaseXP(int exp) 
         {
 
-            //int giveXP = randomXP.Next(15, 30);
 
-            exp = giveXP; //randomizes exp
-            xp += exp; //modifies xp to be  xp + exp
 
-            if (xp >= (level * 100)) // defines level of xp where level will increase
-            {
-                level++; //increases level by 1
+            exp = giveXP;
+            xp += exp;
+
+            if (xp >= (level * 100))
+            { 
+                level++; 
 
             }
         }

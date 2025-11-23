@@ -44,7 +44,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static int p1_Old_X;
         static int p1_Old_Y;
         static string phStat;
-        static int p1dmg = randomDMG.Next(12, 35);
+        static int p1dmg ;
         static string player;
         static (int, int) player1_positionPROXY;
         static (int, int) player1_positionOLD;
@@ -87,7 +87,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static (int, int) enemy_min_max_y = (12, 29);
         static string ehStat;
         static int eHealth = 100;
-        static int enemydmg = randomDMG.Next(12, 35);
+        static int enemydmg;
         static (int, int) enemyLoc = (enemy_x_pos, enemy_y_pos);
         #endregion
 
@@ -170,19 +170,26 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 damageDealt();
                 damageTaken();
 
-                #region //tried a while incombat. broke the game
-                //while (inCombat)
-                //{
-                //    ProcessInput();
-
-                //    GameUpdate();
-
-                //    TakeDamage();
-                //    damageDealt();
-                //    damageTaken();
-                //}
-                #endregion
             }
+            //#region //tried a while incombat. broke the game
+            //while (inCombat)
+            //{
+
+            //    ProcessInput();
+            //    ChkWinCond();
+            //    GameUpdate();
+            //    ErasePlayer();
+            //    DrawP();
+            //    DrawE();
+            //    DrawH();
+            //    hud();
+            //    DeBug();
+
+            //    //    TakeDamage();
+            //    damageDealt();
+            //damageTaken();
+            //}
+            //#endregion
 
 
         }
@@ -369,7 +376,6 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m6
         static void GameUpdate()
         {
-            CanMoveTo(mapXs, mapYs);
 
             p1_x_pos += p1_x_input;
             p1_y_pos += p1_y_input;
@@ -381,6 +387,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (EnemySpawn && !inCombat)
             {
+              CanMoveTo(mapXs, mapYs);
                 MoveEnemy();
             }
 
@@ -443,8 +450,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
 
             Console.SetCursorPosition(output_X + 2, output_Y + 9);
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.Write($"{character} feels: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"{character}"); 
+
+           Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.Write($" feels: ");
             Console.SetCursorPosition(output_X + 16, output_Y + 9);
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine($"                                                       ");
@@ -535,11 +546,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                     case 'm': Console.ForegroundColor = ConsoleColor.Gray; break;
                     case 't': Console.ForegroundColor = ConsoleColor.Green; break;
                     case 'b': Console.ForegroundColor = ConsoleColor.DarkGray; break;
-
+                   
                 }
-
                 Console.Write(mapTile);
                 Console.ResetColor();
+                //if (player1_positionPROXY == enemyLoc)
+                //{
+                //    Console.ForegroundColor = ConsoleColor.Red;
+                //    Console.Write('#');
+                //}
+
             }
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
         }
@@ -662,7 +678,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ForegroundColor = spriteColors[1];
             Console.Write("#");
 
-            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
+            if (enemy_x_pos == p1_x_pos +- 1 && enemy_y_pos == p1_y_pos +- 1 )
             {
                 inCombat = true;
 
@@ -719,8 +735,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (player1_positionPROXY == enemyLoc)
             {
-                
-               
+                p1dmg = randomDMG.Next(12, 35);
+                enemydmg = randomDMG.Next(12, 35);
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(output_X + 2, output_Y + 21);
@@ -759,6 +775,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             {
                 kills += 1;
                 IncreaseXP(xp);
+                DrawE();
                 Console.SetCursorPosition(output_X + 2, output_Y + 25);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("You made enemy go night night...better not disturb them ");

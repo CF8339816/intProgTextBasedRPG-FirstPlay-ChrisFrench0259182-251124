@@ -362,7 +362,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m5
         static void ProcessInput()
         {
-            player1_positionOLD = player1_positionPROXY;
+           // player1_positionOLD = player1_positionPROXY;
 
             // CanMoveTo(mapXs, mapYs);
 
@@ -399,22 +399,22 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             //    MoveEnemy();
             //}
 
-            if (player1_positionPROXY == HealthUp)
-            {
-                Heal();
-                healthTreasure = true;
-            }
+            //if (player1_positionPROXY == HealthUp)
+            //{
+            //    Heal();
+            //    healthTreasure = true;
+            //}
 
-            if (player1_positionPROXY == enemyLoc)
-            {
-                inCombat = true;
+            //if (player1_positionPROXY == enemyLoc)
+            //{
+            //    inCombat = true;
 
-                if (eHealth <= 0)
-                {
-                    inCombat = false;
-                    EnemySpawn = true;
-                }
-            }
+            //    if (eHealth <= 0)
+            //    {
+            //        inCombat = false;
+            //        EnemySpawn = true;
+            //    }
+            //}
             // ChkWinCond();
         }
         //m7

@@ -160,7 +160,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 ErasePlayer();
                 DrawP();
                 ChkWinCond();
-                EraseEnemy();
+                //EraseEnemy();
                 //MoveEnemy();
                 DrawE();
                 DrawH();
@@ -639,7 +639,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static void MoveEnemy()
         {
             Thread.Sleep(1000);
-            EraseEnemy();
+           EraseEnemy();
 
             int eMove_x = enemy_x_pos;
             int eMove_y = enemy_y_pos;
@@ -717,9 +717,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 int regenHealth = randomHealth.Next(15, 75);
                 hp = regenHealth;
                 score += 1;
-                if (health < 100)
+                if (Health < 100)
+  // cap H from h              
                 {
-                    health = health + hp;
+                    Health = health + hp;
                 }
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -749,7 +750,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.SetCursorPosition(output_X + 22, output_Y + 21);
                 Console.WriteLine(enemydmg);
                 hurt = enemydmg;
-                health = health - enemydmg;
+                health = Health - enemydmg;
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(output_X + 2, output_Y + 22);

@@ -166,18 +166,20 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 DrawH();
                 hud();
                 DeBug();
-                TakeDamage();
+               // TakeDamage();
                 damageDealt();
                 damageTaken();
 
                 #region //tried a while incombat. broke the game
                 //while (inCombat)
                 //{
-                //    //ProcessInput();
+                //    ProcessInput();
 
-                //    //GameUpdate();
+                //    GameUpdate();
 
-                //    //TakeDamage();
+                //    TakeDamage();
+                //    damageDealt();
+                //    damageTaken();
                 //}
                 #endregion
             }
@@ -631,13 +633,13 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaX > 0) eMove_x++;
                 else if (deltaX < 0) eMove_x--;
 
-                //if (CanMoveTo(eMove_x, enemy_y_pos))
-                //{
-                //    enemy_Old_X = enemy_x_pos;
+                if (CanMoveTo(eMove_x, enemy_y_pos))
+                {
+                    enemy_Old_X = enemy_x_pos;
 
-                //    enemy_x_pos = eMove_x;
-                //    moved = true;
-                //}
+                    enemy_x_pos = eMove_x;
+                    moved = true;
+                }
             }
 
             if (!moved)
@@ -648,23 +650,23 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (deltaY > 0) eMove_y++;
                 else if (deltaY < 0) eMove_y--;
 
-                //if (CanMoveTo(enemy_x_pos, eMove_y))
-                //{
-                //    enemy_Old_Y = enemy_y_pos;
+                if (CanMoveTo(enemy_x_pos, eMove_y))
+                {
+                    enemy_Old_Y = enemy_y_pos;
 
-                //    enemy_y_pos = eMove_y;
-                //    moved = true;
-                //}
+                    enemy_y_pos = eMove_y;
+                    moved = true;
+                }
             }
             Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
             Console.ForegroundColor = spriteColors[1];
             Console.Write("#");
 
-            //if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
-            //{
-            //    inCombat = true;
+            if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
+            {
+                inCombat = true;
 
-            //}
+            }
         }
         //m16
         static void EnemyHealth()
@@ -697,7 +699,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 if (Health < 100)
   // cap H from h              
                 {
-                    Health = health + hp;
+                    health = health + hp;
                 }
             }
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -780,7 +782,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.Write($"                   ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("                           ");
-                TakeDamage();
+              // TakeDamage();
             }
         }
         //m21        
@@ -788,7 +790,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         {
             if (health >= 0)
             {
-                TakeDamage();
+                TakeDamage(); 
             }
 
             if (health <= 0)
@@ -807,22 +809,18 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"Press 'Q' to exit. ");
 
-                //inCombat = false;
+                inCombat = false;
             }
         }
         //m22
         static void IncreaseXP(int exp) 
         {
-
-
-
             exp = giveXP;
             xp += exp;
 
             if (xp >= (level * 100))
             { 
                 level++; 
-
             }
         }
         //m23

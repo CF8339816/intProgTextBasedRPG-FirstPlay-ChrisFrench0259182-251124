@@ -330,47 +330,24 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m4
         static bool CanMoveTo(int x, int y)
         {
-            int mapYs = y - 1;
-            int mapXs = x - 1;
-
-            if (Maps == null || mapYs < 0 || mapYs >= Maps.Length || mapXs < 0 || mapXs >= Maps[mapYs].Length)
+            int mapYs = y;
+            int mapXs = x;
+           
+            if (Maps != null && mapYs >= 0 && mapYs < Maps.Length && mapXs >= 0 && mapXs < Maps[mapYs].Length)
             {
-                return false;
+                char mapTile = Maps[mapYs][mapXs];
+                if (mapTile == 'm' || mapTile == 'w')
+                {
+                    return false;
+                }
             }
-
-            char mapTile = Maps[mapYs][mapXs];
-
-            if (mapTile == 'm' || mapTile == 'w')
-            {
-                return false;
-            }
-
-            #region//tried to adjust the processing time for the keystrokes to provide illusion ofdifferent terraine speeds  
-            //if (mapTile == 't' )
-            //{
-
-            //    return true;
-            //    Thread.Sleep(2000);
-
-            //}
-
-
-            //if (mapTile == 'g' )
-            //{
-
-            //    return true;
-            //    Thread.Sleep(1000);
-            //}
-            #endregion
 
             return true;
         }
         //m5
         static void ProcessInput()
         {
-            // player1_positionOLD = player1_positionPROXY;
-
-            CanMoveTo(mapXs, mapYs);
+           CanMoveTo(mapXs, mapYs);
 
             p1_Old_X = p1_x_pos;
             p1_Old_Y = p1_y_pos;
@@ -851,8 +828,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m23
         static void ChkWinCond()
         {
-            int mapY = p1_y_pos - 1;
-            int mapX = p1_x_pos - 1;
+            int mapY = p1_y_pos;
+            int mapX = p1_x_pos;
 
             if (Maps != null && mapY >= 0 && mapY < Maps.Length && mapX >= 0 && mapX < Maps[mapY].Length)
             {

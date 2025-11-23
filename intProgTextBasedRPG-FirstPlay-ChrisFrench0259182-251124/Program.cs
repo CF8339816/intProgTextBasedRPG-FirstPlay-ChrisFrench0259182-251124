@@ -550,7 +550,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 }
                 Console.Write(mapTile);
                 Console.ResetColor();
-                //if (player1_positionPROXY == enemyLoc)
+                //if ((p1_Old_X, p1_Old_Y) == enemyLoc)
                 //{
                 //    Console.ForegroundColor = ConsoleColor.Red;
                 //    Console.Write('#');
@@ -574,6 +574,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m12
         static void EraseEnemy()
         {
+           enemy_Old_X= enemy_x_pos;
+           enemy_Old_Y= enemy_y_pos;
+
             int mapX = enemy_Old_X;
             int mapY = enemy_Old_Y;
 

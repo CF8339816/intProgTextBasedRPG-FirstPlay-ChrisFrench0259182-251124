@@ -124,8 +124,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         #region// xp and level 
         static int xp = 0;
         static int level = 0;
-        static int giveXP;
+        static int giveXP = randomXP.Next(15, 30);
+      
         #endregion
+
+
+
 
         static void Main(string[] args)
         {
@@ -163,16 +167,18 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 hud();
                 DeBug();
                 TakeDamage();
+                damageDealt();
+                damageTaken();
 
                 #region //tried a while incombat. broke the game
-                while (inCombat)
-                {
-                    //ProcessInput();
+                //while (inCombat)
+                //{
+                //    //ProcessInput();
 
-                    //GameUpdate();
+                //    //GameUpdate();
 
-                    //TakeDamage();
-                }
+                //    //TakeDamage();
+                //}
                 #endregion
             }
 
@@ -394,27 +400,27 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             player1_positionPROXY = (p1_x_pos, p1_y_pos);
 
-            //if (EnemySpawn && !inCombat)
-            //{
-            //    MoveEnemy();
-            //}
+            if (EnemySpawn && !inCombat)
+            {
+                MoveEnemy();
+            }
 
-            //if (player1_positionPROXY == HealthUp)
-            //{
-            //    Heal();
-            //    healthTreasure = true;
-            //}
+            if (player1_positionPROXY == HealthUp)
+            {
+                Heal();
+                healthTreasure = true;
+            }
 
-            //if (player1_positionPROXY == enemyLoc)
-            //{
-            //    inCombat = true;
+            if (player1_positionPROXY == enemyLoc)
+            {
+                inCombat = true;
 
-            //    if (eHealth <= 0)
-            //    {
-            //        inCombat = false;
-            //        EnemySpawn = true;
-            //    }
-            //}
+                if (eHealth <= 0)
+                {
+                    inCombat = false;
+                    EnemySpawn = true;
+                }
+            }
             // ChkWinCond();
         }
         //m7
@@ -513,7 +519,20 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             Console.SetCursorPosition(output_X + 22, output_Y + 3);
             Console.WriteLine(enemyLoc);
-            //Console.ReadKey(true);
+
+            Console.SetCursorPosition(output_X + 2, output_Y + 4);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("enemy health:");
+
+            Console.SetCursorPosition(output_X + 22, output_Y + 4);
+            Console.WriteLine(eHealth);
+
+            Console.SetCursorPosition(output_X + 26, output_Y + 4);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("player health:");
+
+            Console.SetCursorPosition(output_X + 46, output_Y + 4);
+            Console.WriteLine(health);
         }
         //m10
         static void ErasePlayer()
@@ -545,7 +564,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m11
         static void DrawP()
         {
-            ErasePlayer();
+         
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
 
             Console.ForegroundColor = spriteColors[0];
@@ -614,55 +633,59 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m15
-        //static void MoveEnemy()
-        //{
-        //    EraseEnemy();
+        static void MoveEnemy()
+        {
+            Thread.Sleep(1000);
+            EraseEnemy();
 
-        //    int eMove_x = enemy_x_pos;
-        //    int eMove_y = enemy_y_pos;
+            int eMove_x = enemy_x_pos;
+            int eMove_y = enemy_y_pos;
 
-        //    int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
-        //    int deltaY = p1_y_pos - enemy_y_pos;
+            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
+            int deltaY = p1_y_pos - enemy_y_pos;
 
-        //    bool moved = false;
+            bool moved = false;
 
-        //    if (Math.Abs(deltaX) > Math.Abs(deltaY))
-        //    {
-        //        if (deltaX > 0) eMove_x++;
-        //        else if (deltaX < 0) eMove_x--;
+            if (Math.Abs(deltaX) > Math.Abs(deltaY))
+            {
+                if (deltaX > 0) eMove_x++;
+                else if (deltaX < 0) eMove_x--;
 
-        //        //if (CanMoveTo(eMove_x, enemy_y_pos))
-        //        //{
-        //        //    enemy_Old_X = enemy_x_pos;
+                //if (CanMoveTo(eMove_x, enemy_y_pos))
+                //{
+                //    enemy_Old_X = enemy_x_pos;
 
-        //        //    enemy_x_pos = eMove_x;
-        //        //    moved = true;
-        //        //}
-        //    }
+                //    enemy_x_pos = eMove_x;
+                //    moved = true;
+                //}
+            }
 
-        //    if (!moved)
-        //    {
-        //        eMove_x = enemy_x_pos;
-        //        eMove_y = enemy_y_pos;
+            if (!moved)
+            {
+                eMove_x = enemy_x_pos;
+                eMove_y = enemy_y_pos;
 
-        //        if (deltaY > 0) eMove_y++;
-        //        else if (deltaY < 0) eMove_y--;
+                if (deltaY > 0) eMove_y++;
+                else if (deltaY < 0) eMove_y--;
 
-        //        //if (CanMoveTo(enemy_x_pos, eMove_y))
-        //        //{
-        //        //    enemy_Old_Y = enemy_y_pos;
+                //if (CanMoveTo(enemy_x_pos, eMove_y))
+                //{
+                //    enemy_Old_Y = enemy_y_pos;
 
-        //        //    enemy_y_pos = eMove_y;
-        //        //    moved = true;
-        //        //}
-        //    }
+                //    enemy_y_pos = eMove_y;
+                //    moved = true;
+                //}
+            }
+            Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+            Console.ForegroundColor = spriteColors[1];
+            Console.Write("#");
 
-        //    if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
-        //    {
-        //       inCombat = true; 
-        //        TakeDamage();
-        //    }
-        //}
+            //if (enemy_x_pos == p1_x_pos && enemy_y_pos == p1_y_pos)
+            //{
+            //    inCombat = true;
+
+            //}
+        }
         //m16
         static void EnemyHealth()
         {
@@ -713,10 +736,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (player1_positionPROXY == enemyLoc)
             {
-                // Random randomEnDMG = new Random();
+                
                 int enemydmg = randomEnDMG.Next(12, 28);
 
-                // Random randomDMG = new Random();
+                
                 int dmg = randomDMG.Next(22, 35);
 
                 Console.ForegroundColor = ConsoleColor.White;
@@ -747,11 +770,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine($" {ehStat}");
             }
+          
         }
         //m20
         static void damageDealt()
         {
-            if (eHealth >= 0)
+            if (eHealth <= 0)
             {
                 kills += 1;
                 IncreaseXP(xp);
@@ -811,8 +835,8 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m22
         static void IncreaseXP(int exp) // evil witchcraft
         {
-            // Random randomXP = new Random();
-            int giveXP = randomXP.Next(15, 30);
+
+            //int giveXP = randomXP.Next(15, 30);
 
             exp = giveXP; //randomizes exp
             xp += exp; //modifies xp to be  xp + exp

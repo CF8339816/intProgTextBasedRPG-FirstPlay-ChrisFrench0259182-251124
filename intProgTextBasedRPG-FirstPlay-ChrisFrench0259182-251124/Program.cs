@@ -429,12 +429,12 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             if (EnemySpawn && !inCombat)
             {
-             // inCombat = true;
+                // inCombat = true;
                 //if (CanMoveTo(int tarMapX, int tarMapY))
                 //{
-                //   //  MoveEnemy();
+                MoveEnemy();
                 //}
-                
+
             }
 
             if (player1_positionPROXY == HealthUp)
@@ -454,6 +454,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 }
             }
             ChkWinCond();
+            DrawEnemyAtCurrentPos();
         }
         //m7
         static void alias()
@@ -650,16 +651,37 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m13
         static void DrawE()
         {
+            
+
             if (EnemySpawn)
             {
                 EnemySpawn = false;
-                enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2+1 );
-                enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2+1 );
+                enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2 + 1);
+                enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2 + 1);
                 enemyLoc = (enemy_x_pos, enemy_y_pos);
-                Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
-                Console.ForegroundColor = spriteColors[1];
-                Console.Write("#");
-                eHealth = 100;
+                
+                int EnextX = enemy_x_pos;
+                int EnextY = enemy_y_pos;
+
+                if (CanMoveTo(EnextX, EnextY))
+                {
+                    Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                    Console.ForegroundColor = spriteColors[1];
+                    Console.Write("#");
+                    eHealth = 100;
+                }
+                else
+                {
+                    DrawE();
+                }
+                //EnemySpawn = false;
+                //enemy_x_pos = EnemyStartSpawn.Next(enemy_min_max_x.Item1, enemy_min_max_x.Item2+1 );
+                //enemy_y_pos = EnemyStartSpawn.Next(enemy_min_max_y.Item1, enemy_min_max_y.Item2+1 );
+                //enemyLoc = (enemy_x_pos, enemy_y_pos);
+                //Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                //Console.ForegroundColor = spriteColors[1];
+                //Console.Write("#");
+                //eHealth = 100;
 
             }
             Console.ResetColor();
@@ -680,62 +702,136 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m15
-        //static void MoveEnemy()
-        //{
-        //    //Thread.Sleep(1000);
-        //    EraseEnemy();
+        static void MoveEnemy()
+        {
+            // Calculate difference between player and enemy positions
+            int diffX = p1_x_pos - enemy_x_pos;
+            int diffY = p1_y_pos - enemy_y_pos;
 
-        //    int eMove_x = enemy_x_pos;
-        //    int eMove_y = enemy_y_pos;
+            int moveX = 0;
+            int moveY = 0;
 
-        //    int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
-        //    int deltaY = p1_y_pos - enemy_y_pos;
+            // Decide movement based on the largest absolute difference
+            if (Math.Abs(diffX) > Math.Abs(diffY))
+            {
+                // Prioritize moving horizontally
+                moveX = Math.Sign(diffX); // returns 1, -1, or 0
+            }
+            else
+            {
+                // Prioritize moving vertically
+                moveY = Math.Sign(diffY); // returns 1, -1, or 0
+            }
 
-        //    bool moved = false;
+            int nextEnemyX = enemy_x_pos + moveX;
+            int nextEnemyY = enemy_y_pos + moveY;
 
-        //    if (Math.Abs(deltaX) > Math.Abs(deltaY))
-        //    {
-        //        if (deltaX > 0) eMove_x++;
-        //        else if (deltaX < 0) eMove_x--;
+            // Check if the proposed move is valid using our CanMoveTo logic
+            // We must ensure the 'Maps' array is accessible here.
+            if (CanMoveTo(nextEnemyX, nextEnemyY))
+            {
+                // Erase the enemy from its current position (handled by your EraseEnemy method setting Old_X/Y)
+                EraseEnemy();
 
-        //        if (CanMoveTo(eMove_x, enemy_y_pos))
-        //        {
-        //            enemy_Old_X = enemy_x_pos;
+                // Update enemy position
+                enemy_x_pos = nextEnemyX;
+                enemy_y_pos = nextEnemyY;
+                enemyLoc = (enemy_x_pos, enemy_y_pos); // Update the tuple used for collision checks
+            }
+            // If the primary move is blocked, try moving along the other axis (optional "slide" logic)
+            else
+            {
+                moveX = 0;
+                moveY = 0;
 
-        //            enemy_x_pos = eMove_x;
-        //            moved = true;
-        //        }
-        //    }
+                if (Math.Abs(diffY) > Math.Abs(diffX)) // Try Y first this time
+                {
+                    moveY = Math.Sign(diffY);
+                }
+                else
+                {
+                    moveX = Math.Sign(diffX);
+                }
 
-        //    if (!moved)
-        //    {
-        //        eMove_x = enemy_x_pos;
-        //        eMove_y = enemy_y_pos;
+                nextEnemyX = enemy_x_pos + moveX;
+                nextEnemyY = enemy_y_pos + moveY;
 
-        //        if (deltaY > 0) eMove_y++;
-        //        else if (deltaY < 0) eMove_y--;
+                if (CanMoveTo(nextEnemyX, nextEnemyY))
+                {
+                    EraseEnemy();
+                    enemy_x_pos = nextEnemyX;
+                    enemy_y_pos = nextEnemyY;
+                    enemyLoc = (enemy_x_pos, enemy_y_pos);
+                }
+            }
+        }
 
-        //        if (CanMoveTo(enemy_x_pos, eMove_y))
-        //        {
-        //            enemy_Old_Y = enemy_y_pos;
+            static void DrawEnemyAtCurrentPos()
+            {
+                if (!inCombat) // Only draw if not currently in combat (assuming it disappears then)
+                {
+                    Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                    Console.ForegroundColor = spriteColors[1]; // Use your defined enemy color
+                    Console.Write("#");
+                    Console.ResetColor();
+                }
+            }
+                //static void MoveEnemy()
+                //{
+                //    //Thread.Sleep(1000);
+                //    EraseEnemy();
 
-        //            enemy_y_pos = eMove_y;
-        //            moved = true;
-        //        }
-        //    }
-        //    Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
-        //    Console.ForegroundColor = spriteColors[1];
-        //    Console.Write("#");
+                //    int eMove_x = enemy_x_pos;
+                //    int eMove_y = enemy_y_pos;
 
-        //    if (enemy_x_pos == p1_x_pos + -1 && enemy_y_pos == p1_y_pos + -1)
-        //    {
-        //        inCombat = true;
+                //    int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
+                //    int deltaY = p1_y_pos - enemy_y_pos;
 
-        //    }
-        //}
+                //    bool moved = false;
 
-        //m16
-        static void EnemyHealth()
+                //    if (Math.Abs(deltaX) > Math.Abs(deltaY))
+                //    {
+                //        if (deltaX > 0) eMove_x++;
+                //        else if (deltaX < 0) eMove_x--;
+
+                //        if (CanMoveTo(eMove_x, enemy_y_pos))
+                //        {
+                //            enemy_Old_X = enemy_x_pos;
+
+                //            enemy_x_pos = eMove_x;
+                //            moved = true;
+                //        }
+                //    }
+
+                //    if (!moved)
+                //    {
+                //        eMove_x = enemy_x_pos;
+                //        eMove_y = enemy_y_pos;
+
+                //        if (deltaY > 0) eMove_y++;
+                //        else if (deltaY < 0) eMove_y--;
+
+                //        if (CanMoveTo(enemy_x_pos, eMove_y))
+                //        {
+                //            enemy_Old_Y = enemy_y_pos;
+
+                //            enemy_y_pos = eMove_y;
+                //            moved = true;
+                //        }
+                //    }
+                //    Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                //    Console.ForegroundColor = spriteColors[1];
+                //    Console.Write("#");
+
+                //    if (enemy_x_pos == p1_x_pos + -1 && enemy_y_pos == p1_y_pos + -1)
+                //    {
+                //        inCombat = true;
+
+                //    }
+                //}
+
+                //m16
+                static void EnemyHealth()
         {
             if (eHealth == 100) ehStat = "Looks Healthy";
             if (eHealth <= 75) ehStat = "looks Hurt";

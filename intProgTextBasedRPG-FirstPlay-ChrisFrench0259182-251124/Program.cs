@@ -181,16 +181,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
             while (isPlaying)
             {
+                inCombat = false;
                 CanMoveTo(mapXs, mapYs);
-              
-                ProcessInput();
-                GameUpdate();
-                ErasePlayer();
-                DrawP();
-                ChkWinCond();
-
-                // MoveEnemy();
-                DrawE();
+               DrawE();
 
                 if ((DateTime.Now - lastEnemyMoveTime).TotalMilliseconds >= enemyMoveSpeedMs)
                 {
@@ -201,6 +194,14 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                         lastEnemyMoveTime = DateTime.Now; // Reset the timer
                     }
                 }
+                ProcessInput();
+                GameUpdate();
+                ErasePlayer();
+                DrawP();
+                ChkWinCond();
+
+                // MoveEnemy();
+               
                 DrawH();
                 hud();
                 DeBug();
@@ -598,6 +599,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.SetCursorPosition(0, 0);
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write('+');
+                Console.SetCursorPosition(0, 1);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write('|');
             }
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
         }
@@ -707,7 +711,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = spriteColors[2];
 
                 Console.Write("$");
-                eHealth = 75;
+                
                 Console.ResetColor();
 
                 healthTreasure = false;

@@ -16,8 +16,10 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 {
-    //code ed by Chris French
-    //using minimal references, i did have to look up some functions as i had no frame of refernce for some of the processes.
+    //coded by Chris French
+    //using minimal references, i did have to look up some functions as i had no
+    //frame of refernce for some of the processes such as setting the enemy to
+    //move in real time using a timer since the game is not turn based..
     internal class Program
     {
         #region//bools
@@ -89,18 +91,20 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         static (int, int) enemy_min_max_x = (15, 35);
         static (int, int) enemy_min_max_y = (12, 29);
         static string ehStat;
-        static int eHealth = 100;
-        #region//"clamping" eHealth
+        static int eHealth = 75;
+        static int minEhealth = 0;
+        static int maxEhealth = 75;
+        #region//"clamping" ehealth
         static int ehealth
         {
             get { return eHealth; }
             set
             {
                 // runs each time eHealth= is called to verify min max ranges
-                if (value < minhealth)
-                    eHealth = minhealth;
-                else if (value > maxhealth)
-                    eHealth = maxhealth;
+                if (value < minEhealth)
+                    eHealth = minEhealth;
+                else if (value > maxEhealth)
+                    eHealth = maxEhealth;
                 else
                     eHealth = value;
             }
@@ -147,7 +151,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
         #endregion
 
-
+        static double lastEnemyMoveTime;
 
 
         static void Main(string[] args)
@@ -159,6 +163,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.Clear();
             #endregion
 
+            int enemyMoveSpeedMs = 250; 
+            DateTime lastEnemyMoveTime = DateTime.Now;
+
             #region // get name  of player
             Console.SetCursorPosition(0, 0);
             alias();
@@ -166,7 +173,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.CursorVisible = false;
             #endregion
 
-
+           
             DrawMap();
             Console.WriteLine("press any key to start game...\nPress 'Q' to exit...\nUse W,A,S,D to move around the map...\nGet to the base to be safe...\nPick up '$' supply caches to heal and repair...\nFight enemies '#' by manouvering to them or try to avoid them... ");
 
@@ -175,6 +182,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             while (isPlaying)
             {
                 CanMoveTo(mapXs, mapYs);
+              
                 ProcessInput();
                 GameUpdate();
                 ErasePlayer();
@@ -183,6 +191,16 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
 
                 // MoveEnemy();
                 DrawE();
+
+                if ((DateTime.Now - lastEnemyMoveTime).TotalMilliseconds >= enemyMoveSpeedMs)
+                {
+                    if (!inCombat)
+                    {
+                        EraseEnemy();
+                        MoveEnemy();
+                        lastEnemyMoveTime = DateTime.Now; // Reset the timer
+                    }
+                }
                 DrawH();
                 hud();
                 DeBug();
@@ -653,7 +671,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = spriteColors[1];
 
                 Console.Write("#");
-                eHealth = 100;
+                eHealth = 75;
                 Console.ResetColor();
 
                 EnemySpawn = false;
@@ -689,7 +707,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = spriteColors[2];
 
                 Console.Write("$");
-                eHealth = 100;
+                eHealth = 75;
                 Console.ResetColor();
 
                 healthTreasure = false;
@@ -765,10 +783,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m16
         static void EnemyHealth()
         {
-            if (eHealth == 100) ehStat = "Looks Healthy";
-            if (eHealth <= 75) ehStat = "looks Hurt";
-            if (eHealth <= 50) ehStat = "looks Bloodied ";
-            if (eHealth <= 25) ehStat = "Looks Injured ";
+          
+            if (eHealth <= 75) ehStat = "Looks Healthy";
+            if (eHealth <= 50) ehStat = "looks Hurt";
+            if (eHealth <= 25) ehStat = "looks Bloodied ";
             if (eHealth <= 10) ehStat = "Looks Mortally wounded ";
             if (eHealth <= 0) ehStat = " Um...Sleeping... ";
         }
@@ -812,10 +830,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ForegroundColor = ConsoleColor.Red;
 
             if (player1_positionPROXY == enemyLoc)
-                inCombat = true;
+                //inCombat = true;
             {
-                p1dmg = randomDMG.Next(12, 35);
-                enemydmg = randomDMG.Next(12, 35);
+                p1dmg = randomDMG.Next(17, 45);
+                enemydmg = randomDMG.Next(12, 30);
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.SetCursorPosition(output_X + 2, output_Y + 21);
@@ -849,9 +867,9 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m20
         static void damageDealt()
         {
-            if (eHealth == 0)
+            if (ehealth == 0)
             {
-                inCombat = false;
+                //inCombat = false;
                 kills += 1;
                 IncreaseXP(xp);
                 EraseEnemy();
@@ -866,6 +884,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.Write($"{xp} ");
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.Write("XP ");
+                inCombat = false;
             }
             else
             {
@@ -906,7 +925,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine($"Press 'Q' to exit. ");
 
-                inCombat = false;
+                //inCombat = false;
             }
         }
         //m22

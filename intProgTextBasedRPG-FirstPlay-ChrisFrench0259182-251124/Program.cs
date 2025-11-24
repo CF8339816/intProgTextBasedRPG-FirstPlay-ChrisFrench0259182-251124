@@ -551,11 +551,10 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
                 }
                 Console.Write(mapTile);
                 Console.ResetColor();
-                //if ((p1_Old_X, p1_Old_Y) == enemyLoc)
-                //{
-                //    Console.ForegroundColor = ConsoleColor.Red;
-                //    Console.Write('#');
-                //}
+                Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write('#');
+                
 
             }
             Console.SetCursorPosition(p1_x_pos, p1_y_pos);
@@ -635,59 +634,7 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
             Console.ResetColor();
         }
         //m15
-        static void MoveEnemy()
-        {
-            Thread.Sleep(1000);
-           EraseEnemy();
-
-            int eMove_x = enemy_x_pos;
-            int eMove_y = enemy_y_pos;
-
-            int deltaX = p1_x_pos - enemy_x_pos;  //determins which axis hasthe largestgap to prioritize movement
-            int deltaY = p1_y_pos - enemy_y_pos;
-
-            bool moved = false;
-
-            if (Math.Abs(deltaX) > Math.Abs(deltaY))
-            {
-                if (deltaX > 0) eMove_x++;
-                else if (deltaX < 0) eMove_x--;
-
-                if (CanMoveTo(eMove_x, enemy_y_pos))
-                {
-                    enemy_Old_X = enemy_x_pos;
-
-                    enemy_x_pos = eMove_x;
-                    moved = true;
-                }
-            }
-
-            if (!moved)
-            {
-                eMove_x = enemy_x_pos;
-                eMove_y = enemy_y_pos;
-
-                if (deltaY > 0) eMove_y++;
-                else if (deltaY < 0) eMove_y--;
-
-                if (CanMoveTo(enemy_x_pos, eMove_y))
-                {
-                    enemy_Old_Y = enemy_y_pos;
-
-                    enemy_y_pos = eMove_y;
-                    moved = true;
-                }
-            }
-            Console.SetCursorPosition(enemy_x_pos, enemy_y_pos);
-            Console.ForegroundColor = spriteColors[1];
-            Console.Write("#");
-
-            if (enemy_x_pos == p1_x_pos +- 1 && enemy_y_pos == p1_y_pos +- 1 )
-            {
-                inCombat = true;
-
-            }
-        }
+        ww    //}
         //m16
         static void EnemyHealth()
         {

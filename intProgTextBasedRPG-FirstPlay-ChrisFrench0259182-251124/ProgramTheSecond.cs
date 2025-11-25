@@ -918,7 +918,7 @@ EraseEnemy();
                 GameOver();
                 Console.SetCursorPosition(output_X + 2, output_Y + 30);
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine($"You have died, Game over. ");
+                Console.WriteLine($"You have died, Game over.                                           ");
                 Console.SetCursorPosition(output_X + 2, output_Y + 31);
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"Your XP = {xp}, your level is {level}... ");

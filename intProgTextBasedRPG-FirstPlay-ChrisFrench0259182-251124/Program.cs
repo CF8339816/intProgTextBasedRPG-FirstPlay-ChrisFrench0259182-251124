@@ -676,58 +676,78 @@ namespace intProgTextBasedRPG_FirstPlay_ChrisFrench0259182_251124
         //m15a
         static void MoveEnemy()
         {
-            int posDifX = p1_x_pos - enemy_x_pos; //checks the horizontal dist 
-            int posDifY = p1_y_pos - enemy_y_pos; // checks the vert dist 
 
-            int moveX = 0;
-            int moveY = 0;
-
-            if (Math.Abs(posDifX) > Math.Abs(posDifY))
+            if (p1_x_pos > enemy_x_pos)
             {
-                moveX = Math.Sign(posDifX); // prioritize horizontal returns 1, -1, or 0
+                enemy_x_pos++;
             }
-            else
+            if (p1_x_pos < enemy_x_pos)
             {
-                moveY = Math.Sign(posDifY); //  prioritize verticle returns 1, -1, or 0
+                enemy_x_pos--;
             }
-            int nextEnemyX = enemy_x_pos + moveX;
-            int nextEnemyY = enemy_y_pos + moveY;
-
-            if (CanMoveTo(nextEnemyX, nextEnemyY))
+            if (p1_y_pos > enemy_y_pos)
             {
-                // EraseEnemy();
-                enemy_x_pos = nextEnemyX;
-                enemy_y_pos = nextEnemyY;
-                enemyLoc = (enemy_x_pos, enemy_y_pos);
+                enemy_y_pos++;
             }
-            else
+            if (p1_y_pos < enemy_y_pos)
             {
-                moveX = 0;
-                moveY = 0;
-
-                if (Math.Abs(posDifY) > Math.Abs(posDifX)) // Try Y first this time
-                {
-                    moveY = Math.Sign(posDifY);
-                }
-                else
-                {
-                    moveX = Math.Sign(posDifX);
-                }
-
-                nextEnemyX = enemy_x_pos + moveX;
-                nextEnemyY = enemy_y_pos + moveY;
-
-                if (CanMoveTo(nextEnemyX, nextEnemyY))
-                {
-                    //EraseEnemy();
-                    enemy_x_pos = nextEnemyX;
-                    enemy_y_pos = nextEnemyY;
-                    enemyLoc = (enemy_x_pos, enemy_y_pos);
-                }
+                enemy_y_pos--;
             }
         }
-        ////m15b
-        static void DrawEnemyAtCurrentPos()
+
+
+            //    int posDifX = p1_x_pos - enemy_x_pos; //checks the horizontal dist 
+            //    int posDifY = p1_y_pos - enemy_y_pos; // checks the vert dist 
+
+            //    int moveX = 0;
+            //    int moveY = 0;
+
+            //    if (Math.Abs(posDifX) > Math.Abs(posDifY))
+            //    {
+            //        moveX = Math.Sign(posDifX); // prioritize horizontal returns 1, -1, or 0
+            //    }
+            //    else
+            //    {
+            //        moveY = Math.Sign(posDifY); //  prioritize verticle returns 1, -1, or 0
+            //    }
+            //    int nextEnemyX = enemy_x_pos + moveX;
+            //    int nextEnemyY = enemy_y_pos + moveY;
+
+            //    if (CanMoveTo(nextEnemyX, nextEnemyY))
+            //    {
+            //        // EraseEnemy();
+            //        enemy_x_pos = nextEnemyX;
+            //        enemy_y_pos = nextEnemyY;
+            //        enemyLoc = (enemy_x_pos, enemy_y_pos);
+            //    }
+            //    else
+            //    {
+            //        moveX = 0;
+            //        moveY = 0;
+
+            //        if (Math.Abs(posDifY) > Math.Abs(posDifX)) // Try Y first this time
+            //        {
+            //            moveY = Math.Sign(posDifY);
+            //        }
+            //        else
+            //        {
+            //            moveX = Math.Sign(posDifX);
+            //        }
+
+            //        nextEnemyX = enemy_x_pos + moveX;
+            //        nextEnemyY = enemy_y_pos + moveY;
+
+            //        if (CanMoveTo(nextEnemyX, nextEnemyY))
+            //        {
+            //            //EraseEnemy();
+            //            enemy_x_pos = nextEnemyX;
+            //            enemy_y_pos = nextEnemyY;
+            //            enemyLoc = (enemy_x_pos, enemy_y_pos);
+            //        }
+            //    }
+            //}
+            ////m15b
+            static void DrawEnemyAtCurrentPos()
         {
             //if (!inCombat) 
             //{
